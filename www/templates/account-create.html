@@ -1,0 +1,33 @@
+<ion-view title="Account aanmaken">
+	<ion-content class="app-content wPadding">
+		<div class="intro-block text-center">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse imperdiet vulputate iaculis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.</p>
+			</div>
+			<form id="login-form" ng-submit="processForm()" ng-controller="CreateAccountCtrl">
+				<fieldset>
+					<h2 class="title">Account aanmaken</h2>
+					
+					<label>Voornaam</label>
+					<input type="text" name="firstName" placeholder="Voornaam" ng-model="formData.firstName">
+					
+					<label>Achternaam</label>
+					<input type="text" name="email" placeholder="Achternaam" ng-model="formData.lastName">
+					
+					<label>Email</label>
+					<input type="text" name="email" placeholder="Email adres" ng-model="formData.email">
+					
+					<label>Paswoord</label>
+					<input type="password" name="password" placeholder="Paswoord" ng-model="formData.password">
+					
+					<label>Paswoord opnieuw typen</label>
+					<input type="password" name="password" placeholder="Paswoord opnieuw typen" ng-model="formData.password">
+					
+					<div class="center-block align-middle width-100">
+						<div class="text-center width-100">
+							<button type="submit" class="btn round bgGreen">Aanmaken</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+	</ion-content>
+</ion-view>

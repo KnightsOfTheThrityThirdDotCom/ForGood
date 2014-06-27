@@ -1,0 +1,607 @@
+<ion-view title="progress"  ng-controller="ProgressCtrl">
+
+	<ion-nav-buttons side="left">
+		<button class="button btn-clean icon-add" ng-click="toggleAddWrapper()"></button>
+	</ion-nav-buttons>
+	
+	<ion-nav-buttons side="right">
+		<!--<button class="button btn-clean icon-settings"></button>-->
+	</ion-nav-buttons>
+	
+	<ion-tabs class="tabs-green tabs-icon-only">
+	
+		<ion-tab title="Home" icon-on="icon-total" icon-off="icon-total">
+			
+			<ion-content>
+				<div id="add-wrapper" class="add-wrapper center-block layout-fixed width-100 align-middle hidden">
+					<div class="text-center">
+						<span class="icon-scanner" ng-click="scan()">scannen</span>
+					</div>
+					<div class="text-center">
+						<a href="#/monitor" class="icon-monitor">monitor</a>
+					</div>
+				</div>
+				<section  class="app-content wPadding">
+				<div class="center-block align-middle wButtons width-100">
+				<div class="left">
+				</div>
+				<div class="middle text-center">
+					<h1>Totale voetafdruk</h1>
+				</div>
+				<div class="right">
+					<span class="popup-trigger icon-info cGrey" data-title="Uw voetafdruk" data-text="Je voetafdruk bestaat uit vier categorieën: mobiliteit (wagen, openbaar vervoer en vliegtuig), energie woning (verwarming en elektriciteit), consumptie (voeding en goederen) en diensten. Voor een Belg bedraagt de voetafdruk van diensten reeds 0,8 planeten. Dit is het aantal planeten nodig voor overheidsadministratie, openbare diensten, defensie, onderwijs, gezondheidszorg, financiële/verzekeringsdiensten, cultuur, recreatie, communicatie,…<br><br>Als iedereen zoals een gemiddelde Belg leeft, hebben we 3,9 aardbollen nodig."><span>
+				</div>
+			</div>
+				<div class="status center-block align-top width-100">
+				<div class="progress">
+					
+					<div id="progress-house" class="progress-house center-block align-middle">
+						<div class="graphic">
+							<span class="icon-house"></span>
+						</div>
+						<div class="bar-wrapper">
+							<div class="progress-bar">
+								<div class="amount bgOrange" style="width:50%;">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="progress-food" class="progress-food center-block align-middle">
+						<div class="graphic">
+							<span class="icon-food"></span>
+						</div>
+						<div class="bar-wrapper">
+							<div class="progress-bar">
+								<div class="amount bgGreen" style="width:{{dataTotal.chart.FOOD}}%;">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="progress-car" class="progress-car center-block align-middle">
+						<div class="graphic">
+							<span class="icon-car"></span>
+						</div>
+						<div class="bar-wrapper">
+							<div class="progress-bar">
+								<div class="amount bgRed" style="width:75%;">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="score">
+					{{dataTotal.chart.VOETAFDRUK}}
+				</div>
+				<div id="footprint" class="footprint">
+					<div>
+						<p class="total-footprint"><span id="total" class="total">4.782</span></p>
+					</div>
+					<div class="clearfix">
+						<span class="icon-earth"></span>
+						<span class="icon-earth"></span>
+						<span class="icon-earth"></span>
+						<span class="icon-earth"></span>
+						<span class="icon-earth"></span>
+						<span class="icon-earth"></span>
+					</div>
+				</div>
+			</div>
+				<div class="graph overflow-component">
+				<div class="period scroll-element" ng-repeat="data in dataTotal.graph" style="width:50px;" data-date="{{data.energie.DATE}}">
+					<div class="categories">
+						<div class="inner">
+							<div class="category mobility" style="height:{{data.mobiliteit.TOTAL}}%;"></div>
+							<div class="category living" style="height:{{data.energie.TOTAL}}%;"></div>
+							<div class="category consumption" style="height:{{data.energie.TOTAL}}%;"></div>
+							<div class="category services"></div>
+							<div class="category average"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="legend center-block width-100 align-middle">
+				<div class="text-center">
+					<p><span class="color-legend index-0"></span> Mobiliteit</p>
+				</div>
+				<div class="text-center">
+					<p><span class="color-legend index-1"></span> Energie</p>
+				</div>
+				<div class="text-center">
+					<p><span class="color-legend index-2"></span> Consumptie</p>
+				</div>
+				<div class="text-center">
+					<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+				</div>
+			</div>
+				<div class="legend center-block width-100 align-middle">
+				<div class="text-center">
+					<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+				</div>
+			</div>
+			</section>
+			</ion-content>
+		</ion-tab>
+		
+		<ion-tab title="About" icon-on="icon-car" icon-off="icon-car">
+			<ion-content>
+				<div id="add-wrapper" class="add-wrapper center-block layout-fixed width-100 align-middle hidden">
+					<div class="text-center">
+						<!--<a href="scanner.html" class="icon-scanner">scannen</a>-->
+						<span class="icon-scanner" ng-click="scan()">scannen</span>
+					</div>
+					<div class="text-center">
+						<a href="#/monitor" class="icon-monitor">monitor</a>
+					</div>
+				</div>
+				<section  class="app-content wPadding">
+				<div class="center-block align-middle wButtons width-100">
+					<div class="left">
+					</div>
+					<div class="middle text-center">
+						<h1>Voetafdruk mobiliteit</h1>
+					</div>
+					<div class="right">
+						<span class="popup-trigger icon-info cGrey" data-title="Uw voetafdruk" data-text="Je voetafdruk bestaat uit vier categorieën: mobiliteit (wagen, openbaar vervoer en vliegtuig), energie woning (verwarming en elektriciteit), consumptie (voeding en goederen) en diensten. Voor een Belg bedraagt de voetafdruk van diensten reeds 0,8 planeten. Dit is het aantal planeten nodig voor overheidsadministratie, openbare diensten, defensie, onderwijs, gezondheidszorg, financiële/verzekeringsdiensten, cultuur, recreatie, communicatie,…<br><br>Als iedereen zoals een gemiddelde Belg leeft, hebben we 3,9 aardbollen nodig."><span>
+					</div>
+				</div>
+					<div class="status center-block align-top width-100">
+					<div class="progress">
+						
+						<div id="progress-house" class="progress-house center-block align-middle">
+							<div class="graphic">
+								<span class="icon-house"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgOrange" style="width:50%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="progress-food" class="progress-food center-block align-middle">
+							<div class="graphic">
+								<span class="icon-food"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgGreen" style="width:25%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="progress-car" class="progress-car center-block align-middle">
+							<div class="graphic">
+								<span class="icon-car"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgRed" style="width:75%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="score">
+						4.8
+					</div>
+					<div id="footprint" class="footprint">
+						<div>
+							<p class="total-footprint"><span id="total" class="total">4.782</span>m&sup2;</p>
+						</div>
+						<div class="clearfix">
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+						</div>
+					</div>
+				</div>
+					<div class="graph overflow-component">
+					<div class="period scroll-element" style="width:50px;" data-date="01 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:50%;"></div>
+								<div class="category living" style="height:30%;"></div>
+								<div class="category consumption" style="height:20%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:100px;" data-date="05 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:12%;"></div>
+								<div class="category living" style="height:30%;"></div>
+								<div class="category consumption" style="height:20%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:50px;" data-date="15 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:5%;"></div>
+								<div class="category living" style="height:15%;"></div>
+								<div class="category consumption" style="height:30%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:75px;"  data-date="25 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:50%;"></div>
+								<div class="category living" style="height:5%;"></div>
+								<div class="category consumption" style="height:15%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:105px;"  data-date="30 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:15%;"></div>
+								<div class="category living" style="height:15%;"></div>
+								<div class="category consumption" style="height:30%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="color-legend index-0"></span> Mobiliteit</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-1"></span> Energie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-2"></span> Consumptie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+					</div>
+				</div>
+					<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+					</div>
+				</div>
+			</section>
+			</ion-content>
+		</ion-tab>
+		
+		<ion-tab title="Settings" icon-on="icon-house" icon-off="icon-house">
+			<ion-content>
+				<div id="add-wrapper" class="add-wrapper center-block layout-fixed width-100 align-middle hidden">
+					<div class="text-center">
+						<!--<a href="scanner.html" class="icon-scanner">scannen</a>-->
+						<span class="icon-scanner" ng-click="scan()">scannen</span>
+					</div>
+					<div class="text-center">
+						<a href="#/monitor" class="icon-monitor">monitor</a>
+					</div>
+				</div>
+				<section  class="app-content wPadding">
+				<div class="center-block align-middle wButtons width-100">
+					<div class="left">
+					</div>
+					<div class="middle text-center">
+						<h1>Voetafdruk energie</h1>
+					</div>
+					<div class="right">
+						<span class="popup-trigger icon-info cGrey" data-title="Uw voetafdruk" data-text="Je voetafdruk bestaat uit vier categorieën: mobiliteit (wagen, openbaar vervoer en vliegtuig), energie woning (verwarming en elektriciteit), consumptie (voeding en goederen) en diensten. Voor een Belg bedraagt de voetafdruk van diensten reeds 0,8 planeten. Dit is het aantal planeten nodig voor overheidsadministratie, openbare diensten, defensie, onderwijs, gezondheidszorg, financiële/verzekeringsdiensten, cultuur, recreatie, communicatie,…<br><br>Als iedereen zoals een gemiddelde Belg leeft, hebben we 3,9 aardbollen nodig."><span>
+					</div>
+				</div>
+					<div class="status center-block align-top width-100">
+					<div class="progress">
+						
+						<div id="progress-house" class="progress-house center-block align-middle">
+							<div class="graphic">
+								<span class="icon-house"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgOrange" style="width:50%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="progress-food" class="progress-food center-block align-middle">
+							<div class="graphic">
+								<span class="icon-food"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgGreen" style="width:25%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="progress-car" class="progress-car center-block align-middle">
+							<div class="graphic">
+								<span class="icon-car"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgRed" style="width:75%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="score">
+						4.8
+					</div>
+					<div id="footprint" class="footprint">
+						<div>
+							<p class="total-footprint"><span id="total" class="total">4.782</span>m&sup2;</p>
+						</div>
+						<div class="clearfix">
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+						</div>
+					</div>
+				</div>
+					<div class="graph overflow-component">
+					<div class="period scroll-element" style="width:50px;" data-date="01 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:50%;"></div>
+								<div class="category living" style="height:30%;"></div>
+								<div class="category consumption" style="height:20%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:100px;" data-date="05 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:12%;"></div>
+								<div class="category living" style="height:30%;"></div>
+								<div class="category consumption" style="height:20%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:50px;" data-date="15 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:5%;"></div>
+								<div class="category living" style="height:15%;"></div>
+								<div class="category consumption" style="height:30%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:75px;"  data-date="25 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:50%;"></div>
+								<div class="category living" style="height:5%;"></div>
+								<div class="category consumption" style="height:15%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:105px;"  data-date="30 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:15%;"></div>
+								<div class="category living" style="height:15%;"></div>
+								<div class="category consumption" style="height:30%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="color-legend index-0"></span> Mobiliteit</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-1"></span> Energie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-2"></span> Consumptie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+					</div>
+				</div>
+					<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+					</div>
+				</div>
+			</section>
+			</ion-content>
+		</ion-tab>
+		
+		<ion-tab title="Settings" icon-on="icon-food" icon-off="icon-food">
+			<ion-content>
+				<div id="add-wrapper" class="add-wrapper center-block layout-fixed width-100 align-middle hidden">
+					<div class="text-center">
+						<!--<a href="scanner.html" class="icon-scanner">scannen</a>-->
+						<span class="icon-scanner" ng-click="scan()">scannen</span>
+					</div>
+					<div class="text-center">
+						<a href="#/monitor" class="icon-monitor">monitor</a>
+					</div>
+				</div>
+				<section  class="app-content wPadding">
+				<div class="center-block align-middle wButtons width-100">
+					<div class="left">
+					</div>
+					<div class="middle text-center">
+						<h1>Voetafdruk consumptie</h1>
+					</div>
+					<div class="right">
+						<span class="popup-trigger icon-info cGrey" data-title="Uw voetafdruk" data-text="Je voetafdruk bestaat uit vier categorieën: mobiliteit (wagen, openbaar vervoer en vliegtuig), energie woning (verwarming en elektriciteit), consumptie (voeding en goederen) en diensten. Voor een Belg bedraagt de voetafdruk van diensten reeds 0,8 planeten. Dit is het aantal planeten nodig voor overheidsadministratie, openbare diensten, defensie, onderwijs, gezondheidszorg, financiële/verzekeringsdiensten, cultuur, recreatie, communicatie,…<br><br>Als iedereen zoals een gemiddelde Belg leeft, hebben we 3,9 aardbollen nodig."><span>
+					</div>
+				</div>
+					<div class="status center-block align-top width-100">
+					<div class="progress">
+						
+						<div id="progress-house" class="progress-house center-block align-middle">
+							<div class="graphic">
+								<span class="icon-house"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgOrange" style="width:50%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="progress-food" class="progress-food center-block align-middle">
+							<div class="graphic">
+								<span class="icon-food"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgGreen" style="width:25%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div id="progress-car" class="progress-car center-block align-middle">
+							<div class="graphic">
+								<span class="icon-car"></span>
+							</div>
+							<div class="bar-wrapper">
+								<div class="progress-bar">
+									<div class="amount bgRed" style="width:75%;">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="score">
+						4.8
+					</div>
+					<div id="footprint" class="footprint">
+						<div>
+							<p class="total-footprint"><span id="total" class="total">4.782</span>m&sup2;</p>
+						</div>
+						<div class="clearfix">
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+							<span class="icon-earth"></span>
+						</div>
+					</div>
+				</div>
+					<div class="graph overflow-component">
+					<div class="period scroll-element" style="width:50px;" data-date="01 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:50%;"></div>
+								<div class="category living" style="height:30%;"></div>
+								<div class="category consumption" style="height:20%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:100px;" data-date="05 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:12%;"></div>
+								<div class="category living" style="height:30%;"></div>
+								<div class="category consumption" style="height:20%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:50px;" data-date="15 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:5%;"></div>
+								<div class="category living" style="height:15%;"></div>
+								<div class="category consumption" style="height:30%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:75px;"  data-date="25 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:50%;"></div>
+								<div class="category living" style="height:5%;"></div>
+								<div class="category consumption" style="height:15%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+					<div class="period scroll-element" style="width:105px;"  data-date="30 apr">
+						<div class="categories">
+							<div class="inner">
+								<div class="category mobility" style="height:15%;"></div>
+								<div class="category living" style="height:15%;"></div>
+								<div class="category consumption" style="height:30%;"></div>
+								<div class="category services"></div>
+								<div class="category average"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="color-legend index-0"></span> Mobiliteit</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-1"></span> Energie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-2"></span> Consumptie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+					</div>
+				</div>
+					<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+					</div>
+				</div>
+			</section>
+			</ion-content>
+		</ion-tab>
+	
+	</ion-tabs>
+
+</ion-view>

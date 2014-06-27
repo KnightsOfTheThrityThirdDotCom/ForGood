@@ -1,0 +1,32 @@
+<ion-view title="Login">
+	<ion-content class="app-content wPadding">
+		<div class="intro-block text-center">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse imperdiet vulputate iaculis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.</p>
+			</div>
+			<form id="login-form" ng-submit="processForm()" ng-controller="LoginCtrl">
+				<fieldset>
+					<h2 class="title">Login</h2>
+					
+					<label>Email</label>
+					<input type="text" name="email" placeholder="Email adres" ng-model="formData.name">
+					
+					<label>Paswoord</label>
+					<input type="password" name="password" placeholder="Paswoord" ng-model="formData.password">
+					
+					<div class="center-block align-middle">
+						<div>
+							<button data-href="account_mobility.html" type="submit" class="btn round bgGreen">Inloggen</button>
+						</div>
+						<div>
+							<p class="cGrey">Wachtwoord vergeten?</p>
+							<a href="account_retreave.html">Wachtwoord opvragen</a>
+						</div>
+						<div>
+							<p class="cGrey">Nog geen account?</p>
+							<a href="account_create.html">Account aanmaken</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+	</ion-content>
+</ion-view>

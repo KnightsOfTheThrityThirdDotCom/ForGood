@@ -1,0 +1,1 @@
+var serviceUrl="http://for-good.be/system/en/service/";angular.module("forgood.services",[]).factory("login",function(){return{submit:function(o,r){r({url:serviceUrl+"login",method:"POST",data:{foo:"bar"}}).success(function(r,e,t,s){o.data=r,alert($(scope.data))}).error(function(r,e,t,s){o.status=e})}}});

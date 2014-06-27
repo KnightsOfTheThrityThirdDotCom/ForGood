@@ -1,0 +1,612 @@
+<ion-view title="progress"  ng-controller="ProgressCtrl">
+
+	<ion-nav-buttons side="left">
+		<!--<button class="button btn-clean icon-add" ng-click="toggleAddWrapper()"></button>-->
+	</ion-nav-buttons>
+	
+	<ion-nav-buttons side="right">
+		<!--<button class="button btn-clean icon-settings"></button>-->
+	</ion-nav-buttons>
+	
+	<ion-content class="has-tabs hide-tabs-landscape">
+	
+		<div id="swipe-position" class="swipe-position hide-on-landscape">
+			<span class="on"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	
+		<div id="swipe" class="swipe hide-on-landscape">
+	
+			<div class="swipe-wrap">
+				<!-- TOTAAL -->
+				<div>
+					<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span>Totaal</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle">
+									<div>
+										<span class="icon-info" ng-click="openPopup($event)" data-title="Globale resultaten" data-text="Je voetafdruk bestaat uit vier categorieën: mobiliteit (wagen, openbaar vervoer en vliegtuig), energie woning (verwarming en elektriciteit), consumptie (voeding en goederen) en diensten. Voor een Belg bedraagt de voetafdruk van diensten reeds 0,8 planeten. Dit is het aantal planeten nodig voor overheidsadministratie, openbare diensten, defensie, onderwijs, gezondheidszorg, financiële/verzekeringsdiensten, cultuur, recreatie, communicatie,…"></span>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-total" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.chart.TOTAL_PLANET}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+										
+											<div id="progress-house" class="progress-house cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-house"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgYellow" data-value="{{dataTotal.chart.ENERGY}}" style="width:{{dataTotal.chart.ENERGY_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:75%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-food" class="progress-food cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-food"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgPink" data-value="{{dataTotal.chart.FOOD}}" style="width:{{dataTotal.chart.FOOD_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:30%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-car" class="progress-car cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-car"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgBlue" data-value="{{dataTotal.chart.MOBILITEIT}}"  style="width:{{dataTotal.chart.MOBILITEIT_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:42%;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list regular">
+									<li>
+										<p><span class="bullet-numeric">01.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">02.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">03.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">04.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</div>
+				
+				<!-- MOBILITEIT -->
+				<div>
+					<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span class="icon-car-alt cBlue">Mobiliteit</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle">
+									<div>
+										<span class="icon-info"></span>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-mobility" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.chart.VOETAFDRUK}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+										
+											<div id="progress-house" class="progress-house cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-house"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgOrange" data-value="2" style="width:50%;">
+													</div>
+													<div class="progress-bar average"  style="width:75%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-food" class="progress-food cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-food"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgGreen" data-value="3" style="width:{{dataTotal.chart.FOOD}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:30%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-car" class="progress-car cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-car"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgRed" data-value="2"  style="width:75%;">
+													</div>
+													<div class="progress-bar average"  style="width:42%;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list regular">
+									<li>
+										<p><span class="bullet-numeric">01.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">02.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">03.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">04.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</div>
+				
+				<!-- ENERGIE -->
+				<div>
+					<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span class="icon-house-alt cYellow">Energie</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle">
+									<div>
+										<span class="icon-info"></span>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-energy" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.chart.VOETAFDRUK}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+										
+											<div id="progress-house" class="progress-house cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-house"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgOrange" data-value="2" style="width:50%;">
+													</div>
+													<div class="progress-bar average"  style="width:75%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-food" class="progress-food cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-food"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgGreen" data-value="3" style="width:{{dataTotal.chart.FOOD}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:30%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-car" class="progress-car cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-car"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgRed" data-value="2"  style="width:75%;">
+													</div>
+													<div class="progress-bar average"  style="width:42%;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list regular">
+									<li>
+										<p><span class="bullet-numeric">01.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">02.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">03.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">04.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</div>
+				
+				<!-- CONSUMPTIE -->
+				<div>
+					<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span class="icon-food cPink">Consumptie</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle">
+									<div>
+										<span class="icon-info"></span>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-consumption" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.chart.VOETAFDRUK}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+												<span class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+										
+											<div id="progress-house" class="progress-house cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-house"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgOrange" data-value="2" style="width:50%;">
+													</div>
+													<div class="progress-bar average"  style="width:75%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-food" class="progress-food cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-food"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgGreen" data-value="3" style="width:{{dataTotal.chart.FOOD}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:30%;">
+													</div>
+												</div>
+											</div>
+											
+											<div id="progress-car" class="progress-car cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-car"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgRed" data-value="2"  style="width:75%;">
+													</div>
+													<div class="progress-bar average"  style="width:42%;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list regular">
+									<li>
+										<p><span class="bullet-numeric">01.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">02.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">03.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+									<li>
+										<p><span class="bullet-numeric">04.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</div>
+			
+			</div>
+		</div>
+		
+		<div id="graphs" class="graphs hide-on-portrait">
+			<div class="cats total on">
+				<div class="graph-header">
+					<div class="center-block width-100">
+						<div class="text-center">
+							<h3 class="cDarkGrey"><span class="cGrey">Totaal</span></h3>
+						</div>
+					</div>
+				</div>
+				<div class="scroll-wrapper">
+					<ion-scroll direction="x" class="graph overflow-scroll">
+						<div class="period scroll-element" ng-repeat="data in dataTotal.graph" style="width:50px;" data-date="{{data.energie.DATE}}">
+							<div class="categories">
+								<div class="inner">
+									<div class="cat-height" style="overflow:hidden;height:{{1.2 * data.GRAPH}}px">
+										<div class="category consumption" style="height:{{data.food.TOTAL}}%;"></div>
+										<div class="category energy" style="height:{{data.energie.TOTAL}}%;"></div>
+										<div class="category mobility" style="height:{{data.mobiliteit.TOTAL}}%;"></div>
+										<div class="category services"></div>
+										<div class="category average"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ion-scroll>
+				</div>
+				<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="color-legend index-0"></span> Mobiliteit</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-1"></span> Energie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-2"></span> Consumptie</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+					</div>
+					<div class="text-center">
+						<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+					</div>
+				</div>
+			</div>
+			<div class="cats mobility">
+				<div class="graph-header">
+					<div class="center-block width-100">
+						<div class="text-center">
+							<h3 class="cDarkGrey"><span class="cBlue icon-car-alt">Mobiliteit</span></h3>
+						</div>
+					</div>
+				</div>
+				<div class="scroll-wrapper">
+					<ion-scroll direction="x" class="graph overflow-scroll">
+						<div class="period scroll-element" ng-repeat="data in dataTotal.graph_mobiliteit" style="width:50px;" data-date="{{data.DATE}}">
+							<div class="categories">
+								<div class="inner">
+									<div class="category index-2" style="height:{{data.PLANE}}%;"></div>
+									<div class="category index-1" style="height:{{data.OPENBAAR}}%;"></div>
+									<div class="category index-0" style="height:{{data.CAR}}%;"></div>
+									<!--<div class="category services"></div>
+									<div class="category average"></div>-->
+								</div>
+							</div>
+						</div>
+					</ion-scroll>
+				</div>
+				<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="color-legend index-0"></span> Wagen</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-1"></span> Openbaar vervoer</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-2"></span> Vluchten</p>
+					</div>
+					<!--<div class="text-center">
+						<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+					</div>
+					<div class="text-center">
+						<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+					</div>-->
+				</div>
+			</div>
+			<div class="cats energy">
+				<div class="graph-header">
+					<div class="center-block width-100">
+						<div class="text-center">
+							<h3 class="cDarkGrey"><span class="cYellow icon-house-alt">Energie</span></h3>
+						</div>
+					</div>
+				</div>
+				<div class="scroll-wrapper">
+					<ion-scroll direction="x" class="graph overflow-scroll">
+						<div class="period scroll-element" ng-repeat="data in dataTotal.graph_energy" style="width:50px;" data-date="{{data.DATE}}">
+							<div class="categories">
+								<div class="inner">
+									<div class="category index-1" style="height:{{data.HEAT_PER_DAY}}%;"></div>
+									<div class="category index-0" style="height:{{data.ELECTRICITY_PER_DAY}}%;"></div>
+									<!--<div class="category services"></div>
+									<div class="category average"></div>-->
+								</div>
+							</div>
+						</div>
+					</ion-scroll>
+				</div>
+				<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="color-legend index-0"></span> Elektriciteit</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-1"></span> Verwarming</p>
+					</div>
+					<!--<div class="text-center">
+						<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+					</div>
+					<div class="text-center">
+						<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+					</div>-->
+				</div>
+			</div>
+			<div class="cats consumption">
+				<div class="graph-header">
+					<div class="center-block width-100">
+						<div class="text-center">
+							<h3 class="cDarkGrey"><span class="cPink icon-food">Consumptie</span></h3>
+						</div>
+					</div>
+				</div>
+				<div class="scroll-wrapper">
+					<ion-scroll direction="x" class="graph overflow-scroll">
+						<div class="period scroll-element" ng-repeat="data in dataTotal.graph_food" style="width:50px;" data-date="{{data.energie.DATE}}">
+							<div class="categories">
+								<div class="inner">
+									<div class="category index-3" style="height:{{data.energie.TOTAL}}%;"></div>
+									<div class="category index-2" style="height:{{data.energie.TOTAL}}%;"></div>
+									<div class="category index-1" style="height:{{data.energie.TOTAL}}%;"></div>
+									<div class="category index-0" style="height:20%;"></div>
+									<!--<div class="category services"></div>
+									<div class="category average"></div>-->
+								</div>
+							</div>
+						</div>
+					</ion-scroll>
+				</div>
+				<div class="legend center-block width-100 align-middle">
+					<div class="text-center">
+						<p><span class="color-legend index-0"></span> Verpakking</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-1"></span> Transport</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-2"></span> Bewarking</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-3"></span> Seizoen</p>
+					</div>
+					<div class="text-center">
+						<p><span class="color-legend index-4"></span> Ingrediënten</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</ion-content>
+	
+	<div class="tabs green-tab hide-on-landscape">
+		<ul>
+			<li>
+				<span ng-click="scan()" class="btn icon-scanner">scannen</span>
+			</li>
+			<li>
+				<a href="#update" class="btn icon-update">update</a>
+			</li>
+		</ul>
+	</div>
+</ion-view>
