@@ -19,7 +19,7 @@
 	
 		<div id="swipe" class="swipe hide-on-landscape">
 	
-			<div class="swipe-wrap">
+			<div class="swipe-wrap" ng-controller="AccCtrl">
 				<!-- TOTAAL -->
 				<div>
 					<section  class="app-content wSmallPadding">
@@ -67,7 +67,7 @@
 													<span class="icon-house"></span>
 												</div>
 												<div class="bar-wrapper">
-													<div class="progress-bar bgYellow" data-value="{{dataTotal.chart.ENERGY}}" style="width:{{dataTotal.chart.ENERGY_100}}%;">
+													<div class="progress-bar bgYellow" data-value="{{dataTotal.chart.TOTAL_PLANET_ENERGY}}" style="width:{{dataTotal.chart.ENERGY_100}}%;">
 													</div>
 													<div class="progress-bar average"  style="width:75%;">
 													</div>
@@ -91,7 +91,7 @@
 													<span class="icon-car"></span>
 												</div>
 												<div class="bar-wrapper">
-													<div class="progress-bar bgBlue" data-value="{{dataTotal.chart.MOBILITEIT}}"  style="width:{{dataTotal.chart.MOBILITEIT_100}}%;">
+													<div class="progress-bar bgBlue" data-value="{{dataTotal.chart.TOTAL_PLANET_MOBILITEIT}}"  style="width:{{dataTotal.chart.MOBILITEIT_100}}%;">
 													</div>
 													<div class="progress-bar average"  style="width:42%;">
 													</div>
@@ -103,18 +103,46 @@
 							</div>
 							<div class="content-block">
 								<h2 class="subtitle has-lines cGrey">Tips</h2>
-								<ul class="list regular">
-									<li>
-										<p><span class="bullet-numeric">01.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+								<ul class="list accordion">
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">01.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
-									<li>
-										<p><span class="bullet-numeric">02.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">02.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
-									<li>
-										<p><span class="bullet-numeric">03.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">03.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
-									<li>
-										<p><span class="bullet-numeric">04.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">04.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
+									</li>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">05.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
 								</ul>
 							</div>
@@ -205,18 +233,46 @@
 							</div>
 							<div class="content-block">
 								<h2 class="subtitle has-lines cGrey">Tips</h2>
-								<ul class="list regular">
-									<li>
-										<p><span class="bullet-numeric">01.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+								<ul class="list accordion">
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">01.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
-									<li>
-										<p><span class="bullet-numeric">02.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">02.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
-									<li>
-										<p><span class="bullet-numeric">03.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">03.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
-									<li>
-										<p><span class="bullet-numeric">04.</span> DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">04.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
+									</li>
+									<li class="acc-wrapper icon-right">
+										<div class="acc-title">
+											<h3><span class="bullet-numeric">05.</span>Rij trager</h3>
+										</div>
+										<div class="acc-content">
+											<p>DIY Austin pug roof party, iPhone Odd Future jean shorts master cleanse. Chambray Odd Future ugh, Tonx pickled salvia flexitarian gastropub Godard butcher bicycle rights DIY art party vinyl. Trust fund church-key slow-carb, +1 whatever salvia pour-over synth brunch bicycle rights tousled craft beer flexitarian hella Carles.</p>
+										</div>
 									</li>
 								</ul>
 							</div>

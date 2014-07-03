@@ -697,6 +697,51 @@ h1,h2,h3,h4,h5,h6 {
 	}
 }
 
+/* Accordion */
+.accordion {
+	.acc-wrapper {
+		padding: 5px 10px;
+		margin: 0 !important;
+		position: relative;
+		&:nth-child(odd){
+			.background-opacity(@grey,0.2);
+		}
+		&:nth-child(even){
+			.background-opacity(@grey,0.4);
+		}
+		&:before {
+			position: absolute;
+			right: 10px;
+			top: 7px;
+		}
+		.acc-title {
+			h3 {
+				margin: 0;
+				font-size: 1.4em;
+				color: @darkGrey;
+				.bullet-numeric {
+					margin-right: 5px;
+				}
+			}
+		}
+		.acc-content {
+			max-height: 0;
+			overflow: hidden;
+			p {
+				padding-top: 5px;
+			}
+		}
+		&.active {
+			&:before {
+				transform: rotate(90deg);
+			}
+			.acc-content {
+				max-height: 100000px;
+			}
+		}
+	}
+}
+
 /* ==========================================================================
    Buttons
    ========================================================================== */

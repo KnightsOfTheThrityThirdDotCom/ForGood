@@ -396,7 +396,7 @@ angular.module('forgood.controllers', [])
 	$scope.init();
 
 	
-	/*$scope.formData = {};
+	$scope.formData = {};
 	$scope.processForm = function()	{
 		console.log($scope.formData);
 		$http({
@@ -411,7 +411,7 @@ angular.module('forgood.controllers', [])
 			});
 			$state.go('progress');
 		});
-	};*/
+	};
 	
 })
 
@@ -422,4 +422,34 @@ angular.module('forgood.controllers', [])
 	};
 	
 	$scope.init();
+})
+
+.controller('AccCtrl', function($scope){
+	$scope.accordion = $('.accordion');
+	$scope.accordion.$accordionWrapper = $scope.accordion.find('.acc-wrapper');
+	$scope.accordion.$accordionWrapper.each(function(){
+		var parent = $(this);
+		$(this)[0].isActive = false;
+		$accordionTitle = $(this).find('.acc-title');
+		$accordionTitle.on('click', function(){
+			var self = $(this);
+			$scope.openAccordion(self,parent);
+		});
+	});
+	
+	$scope.openAccordion = function(self,parent){
+		var active = parent[0].isActive;
+		$scope.accordion.$accordionWrapper.each(function(){
+			$(this).removeClass('active');
+			$(this)[0].isActive = false;
+		});
+		if(active){
+			parent.removeClass('active');
+			parent[0].isActive = false;
+		} else {
+			parent.addClass('active');
+			parent[0].isActive = true;
+		}
+	}
+	
 });
