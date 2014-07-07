@@ -11,11 +11,11 @@
 				</div>
 			</div>
 			
-			<form id="energy-form" ng-controller="EnergyCtrl" ng-submit="processForm()">
+			<form id="energy-form" ng-controller="LivingCtrl" ng-submit="processForm()">
 				<fieldset>
 					<h2 class="title">Stroom / Elektriciteit</h2>
 					
-					<label>Type elektriciteit <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Type elektriciteit" data-text="Groene stroom bestaat uit wind-, water- of zonne-energie."></button></label>
+					<label>Type elektriciteit <span class="popup-trigger icon-info" data-title="Type stroom" data-text="Groene stroom bestaat uit wind- water- of zonne-energie"><span></label>
 					<div class="center-block align-middle">
 						<div>
 							<input id="id1" type="radio" name="electricityType" ng-model="formData.electricityType" value="2" checked>
@@ -70,7 +70,7 @@
 				<fieldset>
 					<h2 class="title">Extra</h2>
 					
-					<label>Aantal gezinsleden <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Aantal gezinsleden" data-text="De voetafdruk van het energieverbruik van je gezin wordt gedeeld door het aantal gezinsleden."></button></label>
+					<label>Aantal gezinsleden <span class="popup-trigger icon-info" data-title="Aantal gezinsleden" data-text="De voetafdruk van het energieverbruik van je gezin wordt gedeeld door het aantal gezinsleden."><span></label>
 					<input type="number" placeholder="3" name="sizeFamily" ng-model="formData.sizeFamily">
 				</fieldset>
 				

@@ -211,7 +211,7 @@ angular.module('forgood.controllers', [])
 .controller('ProgressCtrl', function($scope, $http, $state, Product){
 	
 	var chartData;
-	
+    	
 	$scope.init = function(){
 		$http({
 			method  : 'POST',
@@ -225,74 +225,74 @@ angular.module('forgood.controllers', [])
 				chartTotal: [
 					{
 						// Mobiliteit
-						value: data.chart.CIRCLE_MOBILITEIT_100,
+						value: data.TOTAL.circle.mobility_100,
 						color:"#46acf1"
 					},
 					{
 						// Energie
-						value : data.chart.CIRCLE_ENERGY_100,
+						value : data.TOTAL.circle.energy_100,
 						color : "#eecc30"
 					},
 					{
 						// Consumptie
-						value : data.chart.CIRCLE_FOOD_100,
+						value : data.TOTAL.circle.consumption_100,
 						color : "#f7395e"
 					}
 				],
 				chartMobility: [
 					{
 						// Wagen
-						value: 30,
+						value: data.MOBILITY.circle.car_100,
 						color:"#235679"
 					},
 					{
 						// Openbaar vervoer
-						value : 50,
+						value : data.MOBILITY.circle.public_100,
 						color : "#388ac1"
 					},
 					{
 						// Vluchten
-						value : 20,
+						value : data.MOBILITY.circle.plane_100,
 						color : "#46acf1"
 					}
 				],
 				chartEnergy: [
 					{
 						// Elektriciteit
-						value: 30,
+						value: data.ENERGY.circle.elec_100,
 						color:"#776618"
 					},
 					{
 						// Verwarming
-						value : 70,
+						value : data.ENERGY.circle.heat_100,
 						color : "#bea326"
 					}
 				],
 				chartConsumption: [
 					{
 						// Verpakking
-						value: 10,
+						value: data.CONSUMPTION.circle.package_100,
 						color:"#7c1d2f"
 					},
 					{
 						// Transport
-						value : 30,
+						value : data.CONSUMPTION.circle.transport_100,
 						color : "#c62e4b"
 					},
 					{
 						// Bewaring
-						value : 20,
+						value : data.CONSUMPTION.circle.storage_100,
 						color : "#f7395e"
 					},
 					{
 						// Seizoen
-						value : 20,
+						value : data.CONSUMPTION.circle.season_100,
 						color : "#fb9cae"
 					},
 					{
 						// Ingrediënten
-						value : 20,
-						color : "#46acf1"
+						value : data.CONSUMPTION.circle.ingredients_100,
+						color : "#fdd7df"
 					}
 				]
 			};
@@ -312,7 +312,7 @@ angular.module('forgood.controllers', [])
 			new Chart(chartMobility).Doughnut(chartData.chartMobility,options);
 			new Chart(chartEnergy).Doughnut(chartData.chartEnergy,options);
 			new Chart(chartConsumption).Doughnut(chartData.chartConsumption,options);
-			$scope.dataTotal.chart.TOTAL_PLANET = $scope.dataTotal.chart.TOTAL_PLANET.toFixed(1);
+			$scope.dataTotal.footprint_total = $scope.dataTotal.footprint_total.toFixed(1);
 		});
 	};
 	
@@ -337,21 +337,25 @@ angular.module('forgood.controllers', [])
 	
 	$scope.scan = function(){
 		
-			/*var postData = {
-				ean: 7613033006944
-			};			
-			
-			$http({
-				method  : 'POST',
-				crossDomain: true,
-				data    :  $.param(postData),
-				url     : serviceUrl+'getProduct'+sha,
-				headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-			}).success(function(data){
-				Product.submit(data);
-				$state.go('product');
-			});*/
+		/*var postData = {
+			ean: 7613033006944
+		};			
 		
+		$http({
+			method  : 'POST',
+			crossDomain: true,
+			data    :  $.param(postData),
+			url     : serviceUrl+'getProduct'+sha,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+		}).success(function(data){
+			console.log(data);
+			Product.submit(data);
+			$state.go('product');
+		});*/
+		
+		console.log('test');
+		console.log(cordova);
+				
 		cordova.plugins.barcodeScanner.scan(function(result) {
 			
 			
@@ -375,12 +379,16 @@ angular.module('forgood.controllers', [])
 			alert("Scanning failed: " + error);
 		});
 	};
+	
+	/*$scope.totalPlanets = function(num) {
+    	num = parseFloat(num);
+       	num = Math.round(num);
+        return new Array(num);
+    };*/
 })
 
 .controller('UpdateCtrl', function($scope, $http, $state, $ionicViewService){
-	
-	console.log('test');
-	
+		
 	$scope.init = function(){
 		$http({
 			method  : 'POST',
@@ -389,7 +397,6 @@ angular.module('forgood.controllers', [])
 			url     : serviceUrl+'getProfile'+sha
 		}).success(function(data){
 			$scope.currentValue = data.user;
-			console.log($scope);
 		});
 	};
 	
@@ -402,8 +409,9 @@ angular.module('forgood.controllers', [])
 		$http({
 			method  : 'POST',
 			crossDomain: true,
-			data    : $scope.formData,
-			url     : serviceUrl+'updateService'+sha
+			data    : $.param($scope.formData),
+			url     : serviceUrl+'updateService'+sha,
+			headers	: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 		}).success(function(data){
 			console.log(data);
 			$ionicViewService.nextViewOptions({

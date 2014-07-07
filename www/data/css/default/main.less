@@ -101,8 +101,8 @@ textarea {
 
 @mobility-index-0: #235679;
 @mobility-index-1: #388ac1;
-@mobility-index-3: #46acf1;
-@mobility-index-4: #a2d5f8;
+@mobility-index-2: #46acf1;
+@mobility-index-3: #a2d5f8;
 
 @energy-index-0: #776618;
 @energy-index-1: #bea326;
@@ -113,6 +113,7 @@ textarea {
 @consumption-index-1: #c62e4b;
 @consumption-index-2: #f7395e;
 @consumption-index-3: #fb9cae;
+@consumption-index-4: #fdd7df;
 
 .background-opacity(@color,@alpha){
 	@rgba: rgba(red(@color),green(@color),blue(@color),@alpha);
@@ -173,6 +174,11 @@ h1,h2,h3,h4,h5,h6 {
 	&.align-middle {
 		> div {
 			vertical-align: middle;
+		}
+	}
+	&.align-bottom {
+		> div {
+			vertical-align: bottom;
 		}
 	}
 	&.row-block {
@@ -317,8 +323,10 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .popup-trigger {
+	padding: 0;
 	background: none;
 	border: none;
+	-webkit-font-smoothing: antialiased;
 }
 
 /* Swipe panel */
@@ -396,8 +404,20 @@ h1,h2,h3,h4,h5,h6 {
 .progress-bars {
 	width: 100%;
 	.cats {
+		width: 100%;
+		table-layout: fixed;
 		& + .cats {
 			margin-top: 15px;
+		}
+	}
+	.graphic {
+		width: 30px;
+		text-align: center;
+		[class^="icon-"] {
+			font-size: 2em;
+			&.small {
+				font-size: 1.4em;
+			}
 		}
 	}
 	.bar-wrapper {
@@ -423,13 +443,57 @@ h1,h2,h3,h4,h5,h6 {
 				right: 0;
 				bottom: 0;
 			}
-			&.bgGreen {
-				&:before{color: @green;}
-				&:after{background:@green;}
+			&.bgBlue {
+				&:before{color: @blue;}
+				&:after{background:@blue;}
 			}
-			&.bgOrange {
-				&:before{color:@orange;}
-				&:after{background:@orange;}
+			&.bgBlue-index-0 {
+				&:before{color: @mobility-index-0;}
+				&:after{background: @mobility-index-0;}
+			}
+			&.bgBlue-index-1 {
+				&:before{color: @mobility-index-1;}
+				&:after{background: @mobility-index-1;}
+			}
+			&.bgBlue-index-2 {
+				&:before{color: @mobility-index-2;}
+				&:after{background: @mobility-index-2;}
+			}
+			&.bgYellow {
+				&:before{color: @yellow;}
+				&:after{background:@yellow;}
+			}
+			&.bgYellow-index-0 {
+				&:before{color: @energy-index-0;}
+				&:after{background: @energy-index-0;}
+			}
+			&.bgYellow-index-1 {
+				&:before{color: @energy-index-1;}
+				&:after{background: @energy-index-1;}
+			}
+			&.bgPink {
+				&:before{color: @pink;}
+				&:after{background: @pink;}
+			}
+			&.bgPink-index-0 {
+				&:before{color: @consumption-index-0;}
+				&:after{background: @consumption-index-0;}
+			}
+			&.bgPink-index-1 {
+				&:before{color: @consumption-index-1;}
+				&:after{background: @consumption-index-1;}
+			}
+			&.bgPink-index-2 {
+				&:before{color: @consumption-index-2;}
+				&:after{background: @consumption-index-2;}
+			}
+			&.bgPink-index-3 {
+				&:before{color: @consumption-index-3;}
+				&:after{background: @consumption-index-3;}
+			}
+			&.bgPink-index-4 {
+				&:before{color: @consumption-index-4;}
+				&:after{background: @consumption-index-4;}
 			}
 			&.bgRed {
 				&:before{color:@red;}
@@ -540,7 +604,7 @@ h1,h2,h3,h4,h5,h6 {
 					background: @mobility-index-1;
 				}
 				&.index-2 {
-					background: @mobility-index-3;
+					background: @mobility-index-2;
 				}
 			}
 		}
@@ -568,6 +632,9 @@ h1,h2,h3,h4,h5,h6 {
 				&.index-3 {
 					background: @consumption-index-3;
 				}
+				&.index-4 {
+					background: @consumption-index-4;
+				}
 			}
 		}
 	}
@@ -585,19 +652,20 @@ h1,h2,h3,h4,h5,h6 {
 		z-index: 10;
 		background: @darkBlue;
 	}
-	.period {
+	.periods {
 		height: 120px;
+		border-bottom: 2px solid @darkBlue;
+		.period-wrapper {
+			padding-right: 2px;
+			&:last-child {
+				padding-right: 0;
+			}
+		}
+	}
+	.period {
 		min-width: 20px;
-		padding: 0 1px;
 		position: relative;
 		border: 0;
-		border-bottom: 2px solid @darkBlue;
-		&:first-child {
-			padding-left: 0;
-		}
-		&:last-child {
-			padding-right: 0;
-		}
 		&:before {
 			content: '';
 			width: 0;
@@ -625,13 +693,6 @@ h1,h2,h3,h4,h5,h6 {
 			height: 100%;
 			width: 100%;
 			display: table;
-			.inner {
-				width: 100%;
-				height: 100%;
-				display: table-cell;
-				vertical-align: bottom;
-				position: relative;
-			}
 			.category {
 				width: 100%;
 				&.energy {
@@ -645,9 +706,6 @@ h1,h2,h3,h4,h5,h6 {
 				&.consumption {
 					//.background-opacity(@green,0.6);
 					background: @pink;
-				}
-				& + .category {
-					margin-top: 1px;
 				}
 				&.services {
 					height: 24px;
@@ -685,6 +743,9 @@ h1,h2,h3,h4,h5,h6 {
 					&.index-3 {
 						background: @consumption-index-3;
 					}
+					&.index-4 {
+						background: @consumption-index-4;
+					}
 				}
 				&.average {
 					height: 2px;
@@ -706,9 +767,9 @@ h1,h2,h3,h4,h5,h6 {
 		&:nth-child(odd){
 			.background-opacity(@grey,0.2);
 		}
-		&:nth-child(even){
+		/*&:nth-child(even){
 			.background-opacity(@grey,0.4);
-		}
+		}*/
 		&:before {
 			position: absolute;
 			right: 10px;
@@ -923,6 +984,13 @@ h1,h2,h3,h4,h5,h6 {
 				margin-right: 5px;
 			}
 		}
+	}
+	.sub-tab {
+		width: 100%;
+		height: 49px;
+		background: @grey;
+		position: absolute;
+		bottom: 100%;
 	}
 }
 .app-footer {
@@ -1310,12 +1378,23 @@ select {
 
 .cPink { color: @pink; }
 .bgPink { background: @pink; }
+.bgPink-index-0 { background: @consumption-index-0; }
+.bgPink-index-1 { background: @consumption-index-1; }
+.bgPink-index-2 { background: @consumption-index-2; }
+.bgPink-index-3 { background: @consumption-index-3; }
+.bgPink-index-4 { background: @consumption-index-4; }
 
 .cBlue { color: @blue; }
 .bgBlue { background: @blue; }
+.bgBlue-index-0 { background: @mobility-index-0; }
+.bgBlue-index-1 { background: @mobility-index-1; }
+.bgBlue-index-2 { background: @mobility-index-2; }
+.bgBlue-index-3 { background: @mobility-index-3; }
 
 .cYellow { color: @yellow; }
-.bgYellow { background: @yellow; }  
+.bgYellow { background: @yellow; }
+.bgYellow-index-0 { background: @energy-index-0; } 
+.bgYellow-index-1 { background: @energy-index-1; }  
 
 /* ==========================================================================
    Fonts
@@ -1521,6 +1600,9 @@ select {
 .icon-house-alt:before {
   content: "B";
 }
+.icon-truck:before {
+  content: "C";
+}
 
 
 /* ==========================================================================
@@ -1529,6 +1611,7 @@ select {
 .fLeft { float: left; }
 .fRight { float: right; }
 .width-100 { width: 100%; }
+.height-100 { height: 100%; }
 
 .text-left { text-align: left; }
 .text-center { text-align: center; }

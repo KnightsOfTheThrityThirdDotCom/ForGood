@@ -4,7 +4,7 @@
 				<div class="width-100 text-center">
 					<a class="btn round icon-car active"></a>
 					<span class="icon-right cGreen"></span>
-					<a href="#/account-living" class="btn round icon-house"></a>
+					<a href="#/account-energy" class="btn round icon-house"></a>
 					<span class="icon-right cGreen"></span>
 					<a href="#/account-monitor" class="btn round icon-monitor"></a>
 				</div>
@@ -38,7 +38,7 @@
 						</div>
 					</div>
 					
-					<label>Verbruik <span class="popup-trigger icon-info" data-title="Verbruik" data-text="	- heel hoog verbruik (bv. hummer,…)<br>- hoog verbruik (bv. terreinwagen, grote wagen)<br>- gemiddeld verbruik<br>- laag verbruik (bv. kleine stadswagen, zuinige wagen)<br>- heel laag verbruik (bv. smart)"><span></label>
+					<label>Verbruik <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Verbruik" data-text="	- heel hoog verbruik (bv. hummer,…)<br>- hoog verbruik (bv. terreinwagen, grote wagen)<br>- gemiddeld verbruik<br>- laag verbruik (bv. kleine stadswagen, zuinige wagen)<br>- heel laag verbruik (bv. smart)"></button></label>
 					<div class="single-select-block">
 						<div class="center-block select-item align-middle width-100">
 							<div>
@@ -83,10 +83,10 @@
 				<fieldset>
 					<h2 class="title">Vluchten</h2>
 				
-					<label>Aantal Europese vluchten tijdens het afgelopen jaar <span class="popup-trigger icon-info" data-title="Aantal Europese vluchten" data-text="Een heen- en terugreis telt voor twee vluchten."><span></label>
+					<label>Aantal Europese vluchten tijdens het afgelopen jaar <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Aantal vluchten" data-text="Een heen- en terugreis telt voor twee vluchten."></button></label>
 					<input type="number" name="amountOfEuropeanFlights" ng-model="formData.amountOfEuropeanFlights" placeholder="Aantal vluchten afgelopen jaar">
 					
-					<label>Aantal intercontinentale vluchten tijdens het afgelopen jaar <span class="popup-trigger icon-info" data-title="Aantal intercontinentale vluchten" data-text="Een heen- en terugreis telt voor twee vluchten."><span></label>
+					<label>Aantal intercontinentale vluchten tijdens het afgelopen jaar <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Aantal vluchten" data-text="Een heen- en terugreis telt voor twee vluchten."></button></label>
 					<input type="number" name="amountOfIntercontinentalFlights" ng-model="formData.amountOfIntercontinentalFlights" placeholder="Aantal vluchten afgelopen jaar">
 				</fieldset>
 				
