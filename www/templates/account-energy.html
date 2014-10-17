@@ -16,6 +16,8 @@
 				<p>Vul hier een schatting van jouw energieverbruik van het afgelopen jaar in.<br>Deze gegevens hebben wij nodig om een schatting te maken van jouw huidige voetafdruk.</p>
 			</div>
 			
+			{{formData.userKnowsEnergy}}
+			
 			<form id="energy-form" ng-controller="EnergyCtrl" ng-submit="processForm()">
 				<fieldset>
         			<label>Weet je wat jouw energie-verbruik is van het afgelopen jaar?</label>
