@@ -1,0 +1,130 @@
+<ion-view title="Nulmeting Mobiliteit">
+	
+	<ion-content class="app-content wPadding">
+		<div class="top-navigation center-block align-middle width-100">
+				<div class="width-100 text-center">
+					<a class="btn round icon-car-alt active"></a>
+					<span class="icon-right cGreen"></span>
+					<a class="btn round icon-house-alt"></a>
+					<span class="icon-right cGreen"></span>
+					<a  class="btn round icon-monitor"></a>
+				</div>
+			</div>
+			
+			<div class="intro-block text-center">
+				<p>Vult hier een schatting van jouw vervoersverbruik van het afgelopen jaar in.<br>Deze gegevens hebben wij nodig om een schatting te maken van jouw huidige voetafdruk.</p>
+			</div>
+			
+			<form id="mobility-form" ng-controller="MobilityCtrl" ng-submit="processForm()">
+				<fieldset>
+					<h2 class="title">Eigen wagen</h2>
+					
+					<label>Heb je een eigen wagen?</label>
+					<div class="center-block align-middle">
+						<div>
+							<input id="id1" type="radio" name="hasCar" ng-model="hasCar" value="true">
+							<label for="id1"><span><span></span></span>Ja</label>
+						</div>
+						<div>
+							<input id="id2" type="radio" name="hasCar" ng-model="hasCar" value="false">
+							<label for="id2"><span><span></span></span>Nee</label>
+						</div>
+					</div>
+					
+					<div ng-show="hasCar == 'true'" class="margin-t-20">
+    					<label>Brandstof</label>
+    					<div class="custom-select">
+    						<select name="fuelType" ng-model="formData.fuelType">
+    							<option value="0" selected disabled>Kies uw brandstof</option>
+    							<option value="1">Diesel</option>
+    							<option value="2">Benzine</option>
+    							<option value="3">LPG</option>
+    							<option value="4">Elektrisch</option>
+    						</select>
+    					</div>
+    					
+    					<label>Gebruik afgelopen jaar</label>
+    					<div class="center-block width-100 align-middle">
+    						<div>
+    							<input type="number" name="avgKmYear" placeholder="bv. 11500" ng-model="formData.avgKmYear">
+    						</div>
+    						<div>
+    							<input id="unitType-1" type="radio" name="unitType" ng-model="formData.unitType" value="1" checked="true">
+    							<label for="unitType-1"><span><span></span></span>km</label>
+    							<input id="unitType-2" type="radio" name="unitType" ng-model="formData.unitType" value="2">
+    							<label for="unitType-2"><span><span></span></span>L of kWh</label>
+    						</div>
+    					</div>
+    					
+    					<label>Verbruik <button type="button" class="icon-info popup-trigger" ng-click="openPopup('Verbruik','- heel hoog verbruik (bv. hummer,…)<br>- hoog verbruik (bv. terreinwagen, grote wagen)<br>- gemiddeld verbruik<br>- laag verbruik (bv. kleine stadswagen, zuinige wagen)<br>- heel laag verbruik (bv. smart)')"></button></label>
+    					<div class="single-select-block">
+    						<div class="center-block select-item align-middle width-100">
+    							<!--<div>
+    								<input id="id3" type="radio" name="select-1" checked ng-model="formData.toggle">
+    								<label for="id3"><span><span></span></span></label>
+    							</div>-->
+    							<div>
+    								<div class="input-w-label" data-value="l / 100km">
+    									<input type="text" placeholder="bv. 4,4" name="consumption" ng-model="formData.consumption" coma-dot-converter="coma-dot-converter">
+    								</div>
+    							</div>
+    						</div>
+    						<div class="center-block select-item disabled align-middle width-100">
+    							<!--<div>
+    								<input id="id4" type="radio" name="select-1" ng-model="formData.toggle">
+    								<label for="id4"><span><span></span></span></label>
+    							</div>-->
+    							<div>
+    								<div class="custom-select">
+    									<select name="averageConsumption" ng-model="formData.averageConsumption">
+    										<option value="0" selected disabled>Inschatting verbruik</option>
+    										<option value="1">heel hoog verbruik</option>
+    										<option value="2">hoog verbruik</option>
+    										<option value="3">gemiddeld verbruik</option>
+    										<option value="4">laag verbruik</option>
+    										<option value="5">heel laag verbruik</option>
+    									</select>
+    								</div>
+    							</div>
+    						</div>
+    					</div>
+					</div>
+				</fieldset>
+				
+				<fieldset>
+					<h2 class="title">Autodelen</h2>
+					<label>Gedeelde of gehuurde wagen</label>
+					<div class="input-w-label" data-value="uur">
+						<input type="number" name="amountHoursSharedCar" ng-model="formData.amountHoursSharedCar" placeholder="Aantal uur / week">
+					</div>
+				</fieldset>
+				
+				<fieldset>
+					<h2 class="title">Openbaar vervoer</h2>
+					
+					<label>Aantal uur openbaar vervoer</label>
+					<div class="input-w-label" data-value="uur">
+						<input type="number" name="hoursOnPublicTransport" ng-model="formData.hoursOnPublicTransport" placeholder="Aantal uur / week">
+					</div>
+				</fieldset>
+				
+				<fieldset>
+					<h2 class="title">Vluchten</h2>
+				
+					<label>Aantal Europese vluchten <button type="button" class="icon-info popup-trigger" ng-click="openPopup('Aantal vluchten','Een heen- en terugreis telt voor twee vluchten.')"></button></label>
+					<input type="number" name="amountOfEuropeanFlights" ng-model="formData.amountOfEuropeanFlights" placeholder="Aantal vluchten afgelopen jaar">
+					
+					<label>Aantal intercontinentale vluchten <button type="button" class="icon-info popup-trigger" ng-click="openPopup('Aantal vluchten','Een heen- en terugreis telt voor twee vluchten.')"></button></label>
+					<input type="number" name="amountOfIntercontinentalFlights" ng-model="formData.amountOfIntercontinentalFlights" placeholder="Aantal vluchten afgelopen jaar">
+				</fieldset>
+				
+				<div class="bottom-navigation">
+					<div class="center-block align-middle width-100">
+						<div class="text-center width-100">
+							<button type="submit" class="btn btn btn-solid bgGreen">Volgende</button>
+						</div>
+					</div>
+				</div>
+			</form>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,39 @@
+<div class="modal">	
+	<ion-header-bar class="app-header bar-stable nav-title-slide-ios7 bar bar-header nav-bar disable-user-behavior">
+    	<h1 class="title">Product toevoegen</h1>
+        <button class="button button-icon ion-ios7-close-empty button-primary" ng-click="eanModal.hide()"></button>
+    </ion-header-bar>
+
+	<ion-content class="app-content wPadding"  ng-controller="EanCtrl">
+		
+		<div class="intro-block text-center">
+			<p>Gelieve een foto te nemen van het product dat je probeerde te scannen, als ook de naam van de winkel op te geven waar je dit product probeerde te kopen.</p>
+		</div>
+		
+		<ion-list class="list" can-swipe="true">
+			<ion-item class="item item-avatar" href="#" ng-if="picture">
+				<img src="data:image/jpeg;base64,{{picture}}" width="100">
+				<h2>Productfoto</h2>
+			    <ion-option-button class="button-assertive" ng-click="deleteEan()">
+					Verwijderen
+				</ion-option-button>
+			</ion-item>
+		</ion-list>
+		
+		<fieldset class="margin-t-20">
+			<label>Winkel:</label>
+			<div>
+				<input type="text" name="currentAmountOfKm" ng-model="retailer" placeholder="Naam van de winkel">
+			</div>
+		</fieldset>
+		
+		<div class="text-center margin-t-20 margin-b-20">	
+			<button class="btn add-bill btn btn-solid bgBlue" ng-click="captureEan()">Product fotograferen</button>
+		</div>
+		
+		<div class="text-center">
+			<button class="btn btn btn-solid bgGreen" ng-click="submitEan()">Versturen</button>
+		</div>
+				
+	</ion-content>
+</div>

@@ -1,0 +1,32 @@
+<div class="modal">	
+	<ion-header-bar class="app-header bar-stable nav-title-slide-ios7 bar bar-header nav-bar disable-user-behavior">
+    	<h1 class="title">Rekening toevoegen</h1>
+        <button class="button button-icon ion-ios7-close-empty button-primary" ng-click="billModal.hide()"></button>
+    </ion-header-bar>
+
+	<ion-content class="app-content wPadding"  ng-controller="BillCtrl">
+		
+		<div class="intro-block text-center">
+			<p>Gelieve een foto van je rekening te nemen om deze toe te voegen.<br>Gelieve meerdere foto's van jouw rekening te nemen indien deze niet op één foto past.</p>
+		</div>
+		
+		<ion-list class="list" can-swipe="true">
+			<ion-item class="item item-avatar" href="#" ng-repeat="data in pictures">
+				<img src="data:image/jpeg;base64,{{data}}" width="100">
+				<h2>Rekening deel {{$index+1}}</h2>
+			    <ion-option-button class="button-assertive" ng-click="deleteBill($index)">
+					Verwijderen
+				</ion-option-button>
+			</ion-item>
+		</ion-list>
+		
+		<div class="text-center margin-t-20 margin-b-20">	
+			<button class="btn add-bill icon-add btn btn-solid bgBlue" ng-click="captureImg()">Rekening fotograferen</button>
+		</div>
+		
+		<div class="text-center">
+			<button class="btn btn btn-solid bgGreen" ng-click="submitBills()">Versturen</button>
+		</div>
+				
+	</ion-content>
+</div>

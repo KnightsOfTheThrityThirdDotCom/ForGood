@@ -1,0 +1,129 @@
+<ion-view title="Nulmeting wonen">
+	
+	<ion-content class="app-content wPadding">
+		
+		<div class="top-navigation center-block align-middle width-100">
+				<div class="width-100 text-center">
+					<a href="#/account-mobility" class="btn round icon-car"></a>
+					<span class="icon-right cGreen"></span>
+					<a class="btn round icon-house active"></a>
+					<span class="icon-right cGreen"></span>
+					<a href="#/account-monitor" class="btn round icon-monitor"></a>
+				</div>
+			</div>
+			
+			<div class="intro-block text-center">
+				<p>Vul hier een schatting van jouw energieverbruik van het afgelopen jaar in.<br>Deze gegevens hebben wij nodig om een schatting te maken van jouw huidige voetafdruk.</p>
+			</div>
+			
+			<form id="energy-form" ng-controller="EnergyCtrl" ng-submit="processForm()">
+				<fieldset>
+        			<label>Weet je wat jouw energie-verbruik is van het afgelopen jaar?</label>
+        			<div class="center-block align-middle">
+        				<div>
+        					<input id="id1" type="radio" name="userKnowsEnergy" ng-model="formData.userKnowsEnergy" ng-value="'true'">
+        					<label for="id1"><span><span></span></span>Ja</label>
+        				</div>
+        				<div>
+        					<input id="id2" type="radio" name="userKnowsEnergy" ng-model="formData.userKnowsEnergy" ng-value="'false'">
+        					<label for="id2"><span><span></span></span>Nee</label>
+        				</div>
+        			</div>
+                    <div class="margin-t-20" ng-show="formData.userKnowsEnergy == 'true'">
+    					<h2 class="title">Stroom / Elektriciteit</h2>
+    					
+    					<label>Type elektriciteit <button type="button" class="icon-info popup-trigger" ng-click="openPopup('Type elektriciteit','Groene stroom bestaat uit wind-, water- of zonne-energie.')"></button></label>
+    					<div class="center-block align-middle">
+    						<div>
+    							<input id="id3" type="radio" name="electricityType" ng-model="formData.electricityType" value="2" checked>
+    							<label for="id3"><span><span></span></span>Grijze stroom</label>
+    						</div>
+    						<div>
+    							<input id="id4" type="radio" name="electricityType" ng-model="formData.electricityType" value="1">
+    							<label for="id4"><span><span></span></span>Groene stroom</label>
+    						</div>
+    					</div>
+    					
+    					<label>Type electriciteitsmeter</label>
+    					<div class="center-block align-middle">
+            				<div>
+            					<input id="id5" type="radio" name="hasCar" ng-model="formData.typeMeter" value="single">
+            					<label for="id5"><span><span></span></span>Enkelvoudige meter</label>
+            				</div>
+            				<div>
+            					<input id="id6" type="radio" name="hasCar" ng-model="formData.typeMeter" value="double">
+            					<label for="id6"><span><span></span></span>Dag & nacht meter</label>
+            				</div>
+            			</div>
+    					
+    					<label>Jaarlijks verbruik elektriciteit <span ng-if="formData.typeMeter == 'double'">Dag</label>
+    					<div class="input-w-label" data-value="kWh">
+    						<input type="number" placeholder="bv. 1600" name="yearlyConsumptionElectricity_day" ng-model="formData.yearlyConsumptionElectricity_day">
+    					</div>
+    					
+    					<label ng-if="formData.typeMeter == 'double'">Jaarlijks verbruik elektriciteit Nacht</label>
+    					<div class="input-w-label" data-value="kWh" ng-if="formData.typeMeter == 'double'">
+    						<input type="number" placeholder="bv. 1900" name="yearlyConsumptionElectricity_night" ng-model="formData.yearlyConsumptionElectricity_night">
+    					</div>
+                    </div>
+				</fieldset>
+				
+				<fieldset ng-show="formData.userKnowsEnergy == 'true'">
+					<h2 class="title">Verwarming</h2>
+					
+					<label>Type brandstof verwarming</label>
+					<div class="custom-select">
+						<select name="fuelTypeHeating" ng-model="formData.fuelTypeHeating">
+							<option value="0" selected disabled>Type brandstof</option>
+							<option value="1">Stookolie</option>
+							<option value="2">Gas</option>
+							<option value="3">Elektriciteit</option>
+						</select>
+					</div>
+					
+					<label>Jaarlijks verbruik verwarming</label>
+					<div class="center-block width-100 align-middle">
+						<div>
+							<input type="number" placeholder="bv. 15.000" name="yearlyConsumptionHeating" ng-model="formData.yearlyConsumptionHeating">
+						</div>
+						<div>
+							<input id="id3" type="radio" name="yearlyConsumptionHeatingUnit" ng-model="formData.yearlyConsumptionHeatingUnit"  value="2" checked>
+							<label for="id3"><span><span></span></span>kWh</label>
+							<input id="id4" type="radio" name="yearlyConsumptionHeatingUnit" ng-model="formData.yearlyConsumptionHeatingUnit" value="1">
+							<label for="id4"><span><span></span></span>Liter</label>
+							<input id="id5" type="radio" name="yearlyConsumptionHeatingUnit" ng-model="formData.yearlyConsumptionHeatingUnit" value="3">
+							<label for="id5"><span><span></span></span>m&sup3;</label>
+						</div>
+					</div>
+				</fieldset>
+				
+				<fieldset ng-show="formData.userKnowsEnergy == 'true'">
+				    <h2 class="title">Water</h2>
+				    <label>Jaarlijks verbruik water</label>
+    					<div class="input-w-label" data-value="m&sup3;">
+    						<input type="number" placeholder="bv. 1900" name="yearlyConsumptionWater" ng-model="formData.yearlyConsumptionWater">
+    					</div>
+				</fieldset>
+				
+			    <div class="intro-block text-center margin-t-20" ng-if="formData.userKnowsEnergy == 'false'">
+    				<p>Indien je het energie-verbruik van jouw woning niet weet zullen we jouw energie verbruik berekenen aan de hand van het verbruik van een gemiddeld Belgisch gezin, afhankelijk van het aantal gezinsleden binnen jouw woning.</p>
+    			</div>
+				
+				<fieldset>
+					<h2 class="title">Extra</h2>
+					
+					<label>Aantal gezinsleden (inclusief jezelf) <button type="button" class="icon-info popup-trigger" ng-click="openPopup('Aantal gezinsleden','De voetafdruk van het energieverbruik van je gezin wordt gedeeld door het aantal gezinsleden.')"></button></label>
+					<input type="number" placeholder="bv. 3" name="sizeFamily" ng-model="formData.sizeFamily">
+				</fieldset>
+				
+				<div class="bottom-navigation">
+					<div class="center-block align-middle width-100">
+						<div class="text-center width-100">
+							<button type="submit" class="btn btn btn-solid bgGreen">volgende</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		
+	</ion-content>
+</ion-view>

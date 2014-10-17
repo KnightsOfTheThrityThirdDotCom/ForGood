@@ -1,0 +1,872 @@
+<ion-view title="progress"  ng-controller="ProgressCtrl" hide-nav-bar="true">
+	
+	<ion-header-bar class="header-bar hide-on-landscape">
+		<div id="swipe-position" class="swipe-position">
+			<div class="center-block align-middle layout-fixed expand">
+				<div>
+				</div>
+				<div class="text-center" ng-click="goToSlide(0)">
+					<span class="on"></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					</div>
+				<div class="text-right padding-r-12">
+					<button class="button icon-settings btn-clean" ng-click="settingsModal.show()"></button>
+				</div>
+			</div>
+		</div>
+	</ion-header-bar>
+	
+	<ion-content class="has-tabs hide-tabs-landscape" scroll="false"  ng-click="closeSub()">	
+		<div id="swipe" class="swipe hide-on-landscape">
+	
+			<div class="swipe-wrap">
+				<!-- TOTAAL -->
+				<div>
+					<ion-scroll delegate-handle="scroll">
+						
+						<ion-refresher pulling-text="Trek om te vernieuwen..." on-refresh="reloadUserData()" refreshing-icon="ion-refreshing"></ion-refresher>
+						
+						<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span>Totaal</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle info-bar">
+									<div>
+										<button type="button" class="icon-info popup-trigger" ng-click="openPopup('Globale resultaten','Je voetafdruk bestaat uit drie categorieën:<br>- <span class=\'icon-car-alt\'><span> mobiliteit<br>- <span class=\'icon-house-alt\'><span> wonen<br>- <span class=\'icon-food\'><span> Consumptie')"></button>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-total" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.footprint_total}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span ng-repeat="i in totalPlanets(dataTotal.footprint_total) track by $index" class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-car-alt" ng-click="goToSlide(1)"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgBlue" data-value="{{dataTotal.footprint_mobility}}"  style="width:{{dataTotal.TOTAL.chart.mobility_100}}%;">
+													</div>
+													<div class="progress-bar average" style="width:{{dataTotal.TOTAL.chart.mobility_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-house-alt" ng-click="goToSlide(2)"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgYellow" data-value="{{dataTotal.footprint_energy}}" style="width:{{dataTotal.TOTAL.chart.energy_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.TOTAL.chart.energy_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-food small" ng-click="goToSlide(3)"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgPink" data-value="{{dataTotal.footprint_consumption}}" style="width:{{dataTotal.TOTAL.chart.consumption_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.TOTAL.chart.consumption_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list accordion" ng-controller="AccCtrl">
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.total"  ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion($index)" ng-class="{active: isAccActive($index)}">
+											<h3>
+												<span class="icon-{{key}}"></span>
+												{{val.title}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive($index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+					</ion-scroll>
+				</div>
+				
+				<!-- MOBILITEIT -->
+				<div>
+					<ion-scroll delegate-handle="scroll">
+					
+						<ion-refresher pulling-text="Trek om te vernieuwen..." on-refresh="reloadUserData()" refreshing-icon="ion-refreshing"></ion-refresher>
+					
+						<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span class="cBlue"><i class="icon-car-alt cBlue"></i>Mobiliteit</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle info-bar">
+									<div>
+										<button type="button" class="icon-info popup-trigger" ng-click="openPopup('Mobiliteit','De categorie <b>Mobiliteit</b> bestaat uit drie sub-categorieën:<br>- <span class=\'icon-car\'><span> Eigen wagen of autodelen<br>- <span class=\'icon-bus\'><span> Openbaar vervoer<br>- <span class=\'icon-plane\'><span> Europese &amp; intercontinentale vluchten')"></button>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-mobility" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.footprint_mobility}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span ng-repeat="i in totalPlanets(dataTotal.footprint_mobility) track by $index" class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+										
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-car small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgBlue-index-0" data-value="{{dataTotal.MOBILITY.footprint_car}}" style="width:{{dataTotal.MOBILITY.chart.car_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.MOBILITY.chart.car_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-bus small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgBlue-index-1" data-value="{{dataTotal.MOBILITY.footprint_public}}" style="width:{{dataTotal.MOBILITY.chart.public_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.MOBILITY.chart.public_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-plane small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgBlue-index-2" data-value="{{dataTotal.MOBILITY.footprint_plane}}"  style="width:{{dataTotal.MOBILITY.chart.plane_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.MOBILITY.chart.plane_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list accordion" ng-controller="AccCtrl">
+									
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.mobility.car.0" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group0-'+$index)" ng-class="{active: isAccActive('group0-'+$index)}">
+											<h3>
+												<span class="icon-car"></span>
+												{{val.title}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content"  ng-show="isAccActive('group0-'+$index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+									
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.mobility.public" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group1-'+$index)" ng-class="{active: isAccActive('group1-'+$index)}">
+											<h3>
+												<span class="icon-bus"></span>
+												{{val.title}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive('group1-'+$index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+									
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.mobility.plane" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group2-'+$index)" ng-class="{active: isAccActive('group2-'+$index)}">
+											<h3>
+												<span class="icon-plane"></span>
+												{{val.title}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive('group2-'+$index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+									<!--<li class="acc-wrapper icon-right" data-active="false">
+										<div class="acc-title" ng-click="openAccordion($event)">
+											<h3>
+												<span class="icon-info"></span>
+												{{tips.mobility.general.title}}
+											</h3>
+										</div>
+										<div class="acc-content">
+											<div class="margin-b-20">
+												<p>{{tips.mobility.general.text}}</p>
+											</div>
+											<div class="text-right">
+												<span class="ignore btn cRed text-btn" ng-click="ignoreTip(tips.mobility.general.id)">Tip Kan ik niet</span>
+											</div>
+										</div>
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</section>
+					</ion-scroll>
+				</div>
+				
+				<!-- WONEN -->
+				<div>
+					<ion-scroll delegate-handle="scroll">
+					
+						<ion-refresher pulling-text="Trek om te vernieuwen..." on-refresh="reloadUserData()" refreshing-icon="ion-refreshing"></ion-refresher>
+					
+						<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span class="icon-house-alt cYellow">Wonen</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle info-bar">
+									<div>
+										<button type="button" class="icon-info popup-trigger" ng-click="openPopup('Wonen','De categorie <b>Wonen</b> bestaat uit twee sub-categorieën:<br>- <span class=\'icon-electricity\'><span> Elektriciteit<br>- <span class=\'icon-heating\'><span> Verwarming (aardgas of stookolie)')"></button>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-energy" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.footprint_energy}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span ng-repeat="i in totalPlanets(dataTotal.footprint_energy) track by $index" class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+										
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-electricity small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgYellow-index-0" data-value="{{dataTotal.ENERGY.footprint_elec}}" style="width:{{dataTotal.ENERGY.chart.elec_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.ENERGY.chart.elec_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-heating small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgYellow-index-1" data-value="{{dataTotal.ENERGY.footprint_heat}}" style="width:{{dataTotal.ENERGY.chart.heat_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.ENERGY.chart.heat_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list accordion" ng-controller="AccCtrl">
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.energy.energy_elec" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group0-'+$index)" ng-class="{active: isAccActive('group0-'+$index)}">
+											<h3>
+												<span class="icon-electricity"></span>
+												{{val.title}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive('group0-'+$index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+									
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.energy.energy_heat" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group1-'+$index)" ng-class="{active: isAccActive('group1-'+$index)}">
+											<h3>
+												<span class="icon-heating"></span>
+												{{val.title}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive('group1-'+$index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.energy.energy_water" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group2-'+$index)" ng-class="{active: isAccActive('group2-'+$index)}">
+											<h3>
+												<span class="icon-water"></span>
+												{{val.title}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive('group2-'+$index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+					</ion-scroll>
+				</div>
+				
+				<!-- CONSUMPTIE -->
+				<div>
+					<ion-scroll delegate-handle="scroll">
+					
+						<ion-refresher pulling-text="Trek om te vernieuwen..." on-refresh="reloadUserData()" refreshing-icon="ion-refreshing"></ion-refresher>
+					
+						<section  class="app-content wSmallPadding">
+						<div class="content-wrapper wPadding">
+							<h1 class="title"><span class="icon-food cPink">Consumptie</span></h1>
+							<div class="content-block">
+								<div class="center-block width-100 align-middle info-bar">
+									<div>
+										<button type="button" class="icon-info popup-trigger" ng-click="openPopup('Consumptie','De categorie <b>Consumptie</b> bestaat uit vijf sub-categorieën:<br>- <span class=\'icon-ingredients\'><span> Ingrediënten<br>- <span class=\'icon-storage\'><span> Bewaring<br>- <span class=\'icon-package\'><span> Verpakking<br>- <span class=\'icon-truck\'><span> Transport<br>- <span class=\'icon-season\'><span> Seizoensgebonden')"></button>
+									</div>
+									<div class="text-right">
+										<span class="icon-rotate">bekijk detail</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-50">
+										<div class="chart">
+											<canvas id="chart-consumption" width="125" height="125" class="chart"></canvas>
+											<div class="counter">
+												<div class="center-block align-middle expand">
+													<div class="text-center">
+														<span class="total">
+															{{dataTotal.footprint_consumption}}<br><span>Planeten</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="footprint" class="footprint">
+											<div class="clearfix">
+												<span ng-repeat="i in totalPlanets(dataTotal.footprint_consumption) track by $index" class="icon-earth"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col col-50">
+										<div class="progress-bars">
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-ingredients small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgPink-index-0" data-value="{{dataTotal.CONSUMPTION.footprint_ingredients}}" style="width:{{dataTotal.CONSUMPTION.chart.ingredients_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.CONSUMPTION.chart.ingredients_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-storage small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgPink-index-1" data-value="{{dataTotal.CONSUMPTION.footprint_storage}}" style="width:{{dataTotal.CONSUMPTION.chart.storage_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.CONSUMPTION.chart.storage_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-package small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgPink-index-2" data-value="{{dataTotal.CONSUMPTION.footprint_package}}" style="width:{{dataTotal.CONSUMPTION.chart.package_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.CONSUMPTION.chart.package_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-truck small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgPink-index-3" data-value="{{dataTotal.CONSUMPTION.footprint_transport}}" style="width:{{dataTotal.CONSUMPTION.chart.transport_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.CONSUMPTION.chart.transport_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+											
+											
+											
+											<div class="cats center-block align-middle">
+												<div class="graphic">
+													<span class="icon-season small"></span>
+												</div>
+												<div class="bar-wrapper">
+													<div class="progress-bar bgPink-index-4" data-value="{{dataTotal.CONSUMPTION.footprint_season}}" style="width:{{dataTotal.CONSUMPTION.chart.season_100}}%;">
+													</div>
+													<div class="progress-bar average"  style="width:{{dataTotal.CONSUMPTION.chart.season_100_gem}}%;">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Tips</h2>
+								<ul class="list accordion" ng-controller="AccCtrl">
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.consumption.korftips[0].products" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group0-'+$index)" ng-class="{active: isAccActive('group0-'+$index)}">
+											<h3>
+												{{val.name}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive('group0-'+$index)">
+											<div class="margin-b-20">
+												<p ng-bind-html="val.text"></p>
+												<div class="footprint">
+													<div class="text-left">
+														<p class="total-footprint">Totale voetafdruk: {{val.voetafdruk}} <span class="unit">m&sup2;/kg</span></p>
+													</div>
+													<div class="center-block align-middle">
+														<div class="wrapper text-center">
+															<span class="icon-ingredients"></span>
+															<p>{{val.voetafdruk_ingredient}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-storage"></span>
+															<p>{{val.voetafdruk_bewaring}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-package"></span>
+															<p>{{val.voetafdruk_verpakking}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-truck"></span>
+															<p>{{val.voetafdruk_transport}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-season"></span>
+															<p>{{val.voetafdruk_seizoen}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="text-left margin-b-5">
+												<span class="ignore btn small-btn cGreen bGreen" ng-click="ignoreTip(val.id,'accepted')">Doe ik!</span>
+												<span class="ignore btn small-btn cYellow bYellow" ng-click="ignoreTip(val.id,'later')">Doe ik later!</span>
+												<span class="ignore btn small-btn cRed bRed" ng-click="ignoreTip(val.id,'ignore')">Kan ik niet!</span>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>-->
+							<div class="content-block">
+								<h2 class="subtitle has-lines cGrey">Minst ecologische producten</h2>
+								
+								<ul class="list accordion" ng-controller="AccCtrl">
+									<li class="acc-wrapper" ng-repeat="(key,val) in tips.consumption.products" ng-if="val">
+										<div class="acc-title" ng-click="toggleAccordion('group0-'+$index)" ng-class="{active: isAccActive('group0-'+$index)}">
+											<h3>
+												{{val.name}}
+											</h3>
+											<span class="icon-right"></span>
+										</div>
+										<div class="acc-content" ng-show="isAccActive('group0-'+$index)">
+											<div class="margin-b-20">
+												<!--<p ng-bind-html="val.text"></p>-->
+												<div class="footprint">
+													<div class="text-left">
+														<p class="total-footprint">Totale voetafdruk: {{val.voetafdruk}} <span class="unit">m&sup2;/kg</span></p>
+													</div>
+													<div class="center-block align-middle">
+														<div class="wrapper text-center">
+															<span class="icon-ingredients"></span>
+															<p>{{val.voetafdruk_ingredient}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-storage"></span>
+															<p>{{val.voetafdruk_bewaring}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-package"></span>
+															<p>{{val.voetafdruk_verpakking}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-truck"></span>
+															<p>{{val.voetafdruk_transport}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+														<div class="wrapper text-center">
+															<span class="icon-season"></span>
+															<p>{{val.voetafdruk_seizoen}} <span class="unit">m&sup2;/kg</span></p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+					</ion-scroll>
+				</div>
+			
+			</div>
+		</div>
+		
+		<ion-scroll>
+			<div id="graphs" class="graphs hide-on-portrait">
+			
+				<div class="graph-filter center-block width-100 layout-fixed align-middle">
+					<div class="text-right w">
+						<h3 class="cGreen title">schaal</h3>
+					</div>
+					<div>
+						<div class="custom-select small-select">
+							<select ng-change="changeGraph()" ng-model="currentGraph">
+								<option value="period">Per ingave</option>
+								<option value="month">Per maand</option>
+								<option value="year">Per jaar</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			
+				<!-- Total graph -->
+				<div class="cats total on">
+					
+					<div class="graph-header">
+						<div class="center-block width-100">
+							<div class="text-center">
+								<h3 class="cDarkGrey"><span class="cGrey">Totaal</span></h3>
+							</div>
+						</div>
+					</div>
+					
+					<div class="scroll-wrapper" ng-class="{planet5: scale==5,planet10: scale==10}">
+						<ion-scroll direction="x" class="scroll-pane">
+							<div class="graph-wrapper tbl align-bottom">
+								<div class="tbl-rw height-100">
+									<div class="period tbl-cll height-100" ng-repeat="period in dataTotal.TOTAL.graph_final.periods" style="width:{{period.width}}px;">
+										<div class="category consumption" style="height:{{((period.consumption_plan/scale)*100)}}%;"></div>
+										<div class="category energy" style="height:{{((period.energy_plan/scale)*100)}}%;"></div>
+										<div class="category mobility" style="height:{{((period.mobility_plan/scale)*100)}}%;"></div>
+										<div class="category services" style="height:{{((period.fixed_plan/scale)*100)}}%;"></div>
+										<div class="period-date" data-date="{{period.DATE}}"></div>
+									</div>
+								</div>
+							</div>
+						</ion-scroll>
+						<div class="graph-background"></div>
+						<div class="average-belg" style="top:{{100-((dataTotal.TOTAL.graph_final.average_belg/scale)*100)}}px;"></div>
+						<div class="average-user" style="top:{{100-((dataTotal.footprint_total/scale)*100)}}px;"></div>
+					</div>
+					
+					<div class="legend center-block width-100 align-middle">
+						<div class="text-center">
+							<p><span class="color-legend index-2"></span> Consumptie</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-1"></span> Energie</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-0"></span> Mobiliteit</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend services"></span> Vaste voetafdruk</p>
+						</div>
+					</div>
+					<div class="legend center-block width-100 align-middle">
+						<div class="text-center">
+							<p><span class="line-legend average"></span> Voetafdruk gemiddelde Belg</p>
+						</div>
+						<div class="text-center">
+							<p><span class="line-legend average-user"></span> Jouw gemiddelde voetafdruk</p>
+						</div>
+					</div>
+					
+				</div>
+				
+				<!-- Mobility graph -->
+				<div class="cats mobility">
+					
+					<div class="graph-header">
+						<div class="center-block width-100">
+							<div class="text-center">
+								<h3 class="cDarkGrey"><span class="cBlue icon-car-alt">Mobiliteit</span></h3>
+							</div>
+						</div>
+					</div>
+					
+					<div class="scroll-wrapper" ng-class="{planet5: scale==5,planet10: scale==10}">
+						<ion-scroll direction="x" class="scroll-pane">
+							<div class="graph-wrapper tbl align-bottom">
+								<div class="tbl-rw height-100">
+									<div class="period tbl-cll height-100" ng-repeat="period in dataTotal.MOBILITY.graph_final.periods" style="width:{{period.width}}px;">
+										<div class="category index-2" style="height:{{((period.plane_plan/scale)*100)}}%;"></div>
+										<div class="category index-1" style="height:{{((period.public_plan/scale)*100)}}%;"></div>
+										<div class="category index-0" style="height:{{((period.car_plan/scale)*100)}}%;"></div>
+										<div class="period-date" data-date="{{period.date}}"></div>
+									</div>
+								</div>
+							</div>
+						</ion-scroll>
+						<div class="graph-background"></div>
+					</div>
+					
+					<div class="legend center-block width-100 align-middle">
+						<div class="text-center">
+							<p><span class="color-legend index-2"></span> Vluchten</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-1"></span> Openbaar vervoer</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-0"></span> Wagen</p>
+						</div>
+					</div>
+					
+				</div>
+				
+				<!-- Energy graph -->
+				<div class="cats energy">
+					
+					<div class="graph-header">
+						<div class="center-block width-100">
+							<div class="text-center">
+								<h3 class="cDarkGrey"><span class="cYellow icon-house-alt">Wonen</span></h3>
+							</div>
+						</div>
+					</div>
+					
+					<div class="scroll-wrapper" ng-class="{planet5: scale==5,planet10: scale==10}">
+						<ion-scroll direction="x" class="scroll-pane">
+							<div class="graph-wrapper tbl align-bottom">
+								<div class="tbl-rw height-100">
+									<div class="period tbl-cll height-100" ng-repeat="period in dataTotal.ENERGY.graph_final.periods" style="width:{{period.width}}px;">
+										<div class="category index-1" style="height:{{((period.elec_plan/scale)*100)}}%;"></div>
+										<div class="category index-0" style="height:{{((period.heat_plan/scale)*100)}}%;"></div>
+										<div class="period-date" data-date="{{period.date}}"></div>
+									</div>
+								</div>
+							</div>
+						</ion-scroll>
+						<div class="graph-background"></div>
+					</div>
+					
+					<div class="legend center-block width-100 align-middle">
+						<div class="text-center">
+							<p><span class="color-legend index-1"></span> Elektriciteit</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-0"></span> Verwarming</p>
+						</div>
+					</div>
+					
+				</div>
+				
+				<!-- Consumption graph -->
+				<div class="cats consumption">
+					
+					<div class="graph-header">
+						<div class="center-block width-100">
+							<div class="text-center">
+								<h3 class="cDarkGrey"><span class="cPink icon-food">Consumptie</span></h3>
+							</div>
+						</div>
+					</div>
+					
+					<div class="scroll-wrapper" ng-class="{planet5: scale==5,planet10: scale==10}">
+						<ion-scroll direction="x" class="scroll-pane">
+							<div class="graph-wrapper tbl align-bottom">
+								<div class="tbl-rw height-100">
+									<div class="period tbl-cll height-100" ng-repeat="period in dataTotal.CONSUMPTION.graph_final.periods" style="width:{{period.width}}px;">
+										<div class="category index-4" style="height:{{((period.season_plan/scale)*100)}}%;"></div>
+										<div class="category index-3" style="height:{{((period.transport_plan/scale)*100)}}%;"></div>
+										<div class="category index-2" style="height:{{((period.package_plan/scale)*100)}}%;"></div>
+										<div class="category index-1" style="height:{{((period.storage_plan/scale)*100)}}%;"></div>
+										<div class="category index-0" style="height:{{((period.ingredients_plan/scale)*100)}}%;"></div>
+										<div class="period-date" data-date="{{period.date}}"></div>
+									</div>
+								</div>
+							</div>
+						</ion-scroll>
+						<div class="graph-background"></div>
+					</div>
+					
+					<div class="legend center-block width-100 align-middle">
+						<div class="text-center">
+							<p><span class="color-legend index-4"></span> Seizoen</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-3"></span> Transport</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-2"></span> Verpakking</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-1"></span> Opslag</p>
+						</div>
+						<div class="text-center">
+							<p><span class="color-legend index-0"></span> Ingrediënten</p>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+		</ion-scroll>
+		
+	</ion-content>
+	
+	<div class="tabs green-tab hide-on-landscape">
+		<div class="sub-tab" ng-hide="hideSub">
+			<ul class="stacked">
+				<li>
+					<span class="btn icon-car-alt" ng-click="updateMobilityModal.show();toggleSub()">Mobiliteit updaten</span>
+				</li>
+				<li>
+					<span class="btn icon-house-alt" ng-click="updateEnergyModal.show();toggleSub()">Wonen updaten</a>
+				</li>
+				<li>
+					<span class="btn icon-bill" ng-click="billModal.show();toggleSub()">Rekening toevoegen</span>
+				</li>
+			</ul>
+		</div>
+		<ul>
+			<li>
+				<span ng-click="scan()" class="btn icon-scanner">scannen</span>
+			</li>
+			<li>
+				<span ng-click="toggleSub()" class="btn icon-update">update</span>
+			</li>
+		</ul>
+	</div>
+</ion-view>

@@ -1,0 +1,1 @@
+angular.module("forgood.directives",[]).directive("comaDotConverter",function(){return{require:"ngModel",link:function(e,r,n,i){i.$parsers.push(function(e){if("undefined"==typeof e)return"";var r=e.replace(/,/g,".");return r!=e&&(i.$setViewValue(r),i.$render()),r})}}});

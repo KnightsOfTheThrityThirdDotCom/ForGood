@@ -1,0 +1,21 @@
+<div class="modal">	
+	<ion-header-bar class="app-header bar-stable nav-title-slide-ios7 bar bar-header nav-bar disable-user-behavior">
+    	<h1 class="title">Instellingen</h1>
+        <button class="button button-icon ion-ios7-close-empty button-primary" ng-click="settingsModal.hide()"></button>
+    </ion-header-bar>
+	
+	<ion-content class="app-content wPadding" ng-controller="UpdateMobilityCtrl">
+		<!--<div class="text-center margin-t-20">
+			<a href="#reset-mobility" class="btn btn btn-solid bgBlue">Nulmeting opnieuw invullen</a>
+		</div>-->
+		<div class="text-center margin-t-20">
+			<p>Huidige versie: v 0.4.1</p>
+		</div>
+		<div class="text-center margin-t-20">
+			<button class="btn btn btn-solid bgOrange" ng-click="openResetPopup()">Account resetten</button>
+		</div>
+		<div class="text-center margin-t-20">
+			<button class="btn btn btn-solid bgRed" ng-click="logout()">Uitloggen</button>
+		</div>
+	</ion-content>
+</div>

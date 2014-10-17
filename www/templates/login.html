@@ -1,0 +1,31 @@
+<ion-view title="Login"  hide-nav-bar="true">
+	<ion-content class="app-content wPadding">
+		<div class="intro-block text-center">
+		</div>
+		<form id="login-form" ng-submit="processForm()" ng-controller="LoginCtrl">
+			<fieldset>
+				<h2 class="title">Login</h2>
+				
+				<label>Email</label>
+				<input type="email" name="email" placeholder="Email adres" ng-model="formData.email">
+				
+				<label>Paswoord</label>
+				<input type="password" name="password" placeholder="Paswoord" ng-model="formData.password">
+				
+				<div class="center-block align-middle">
+					<div>
+						<button data-href="account_mobility.html" type="submit" class="btn btn btn-solid bgGreen">Inloggen</button>
+					</div>
+					<div>
+						<p class="cGrey">Wachtwoord vergeten?</p>
+						<a href="#forgot-password">Wachtwoord opvragen</a>
+					</div>
+					<div>
+						<p class="cGrey">Nog geen account?</p>
+						<a href="#create-account">Account aanmaken</a>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</ion-content>
+</ion-view>

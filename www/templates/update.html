@@ -1,0 +1,61 @@
+<div class="modal">	
+	<ion-header-bar class="app-header bar-stable nav-title-slide-ios7 bar bar-header nav-bar disable-user-behavior">
+    	<h1 class="title">Mobiliteit updaten</h1>
+        <button class="button button-clear button-primary" ng-click="updateMobilityModal.hide()">Cancel</button>
+    </ion-header-bar>
+	
+	<ion-content class="app-content wPadding" ng-controller="UpdateMobilityCtrl">
+		<form id="monitor-form" ng-submit="processForm()">
+			<fieldset>
+				<h2 class="title">Mobiliteit</h2>
+				
+				<label>Huidige kilometerstand</label>
+				<div class="input-w-label" data-value="km">
+					<input type="number" name="currentAmountOfKm" ng-model="formData.currentAmountOfKm" placeholder="{{currentValue.currentAmountOfKm}}">
+				</div>
+				
+				<label>Gemiddeld aantal uren per week openbaar vervoer</label>
+				<div class="input-w-label" data-value="uur">
+					<input type="number" name="publicTransport" ng-model="formData.publicTransport" placeholder="{{currentValue.currentAmountOfPublicTransport}}">
+				</div>
+				
+				<label>Aantal Europese vluchten sinds vorige meting <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Aantal vluchten" data-text="Een heen- en terugreis telt voor twee vluchten."></button></label>
+				<div class="input-w-label" data-value="vluchten">
+					<input type="number" name="europeanFlights" ng-model="formData.europeanFlights" placeholder="{{currentValue.currentAmountOfEuropeanFlights}}">
+				</div>
+				
+				<label>Aantal intercontinentale vluchten sinds vorige meting <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Aantal vluchten" data-text="Een heen- en terugreis telt voor twee vluchten."></button></label>
+				<div class="input-w-label" data-value="vluchten">
+					<input type="number" name="intercontinentalFlights" ng-model="formData.intercontinentalFlights" placeholder="{{currentValue.currentAmountOfIntercontinentalFlights}}">
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<h2 class="title">Wonen</h2>
+				
+				<label>Huidige dag-meterstand elektriciteit</label>
+				<div class="input-w-label" data-value="kWh">
+					<input type="number" name="currentAmountOfElectricityConsumption_day" ng-model="formData.currentAmountOfElectricityConsumption_day" placeholder="{{currentValue.currentAmountOfElectricityConsumption_day}}">
+				</div>
+				
+				<label>Huidige nacht-meterstand elektriciteit</label>
+				<div class="input-w-label" data-value="kWh">
+					<input type="number" name="currentAmountOfElectricityConsumption_night" ng-model="formData.currentAmountOfElectricityConsumption_night" placeholder="{{currentValue.currentAmountOfElectricityConsumption_night}}">
+				</div>
+				
+				<label>Huidige meterstand gas <button type="button" class="icon-info popup-trigger" ng-click="openPopup($event)" data-title="Meterstand gas" data-text="Niet in te vullen indien verwarming op elektriciteit. Indien je verwarmt op stookolie, vul dan de hoeveelheid stookolie in die recent werd bijgetankt. Je kunt dan best deze gegevens invullen telkens je stookolietank wordt bijgevuld."></button></label>
+				<div class="input-w-label" data-value="kWh">
+					<input type="number" name="currentAmountOfGasConsumption" ng-model="formData.currentAmountOfGasConsumption" placeholder="{{currentValue.currentAmountOfGasConsumption}}">
+				</div>
+			</fieldset>
+			
+			<div class="bottom-navigation">
+				<div class="center-block align-middle width-100">
+					<div class="text-center width-100">
+						<button type="submit" class="btn round wBorder bGreen">klaar</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</ion-content>
+</div>

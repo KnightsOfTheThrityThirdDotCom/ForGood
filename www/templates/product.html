@@ -1,0 +1,169 @@
+<ion-view title="{{product.product.name}}" ng-controller="ProductCtrl">
+	
+	<ion-nav-bar class="app-header bar-stable nav-title-slide-ios7">
+		<ion-nav-back-button class="button-icon icon  ion-ios7-arrow-back">
+	    	Terug
+		</ion-nav-back-button>
+	</ion-nav-bar>
+	
+	<ion-content class="app-content">
+		<div class="scanned-product">
+				<div class="center-block align-top">
+					<div class="product-img" ng-if="product.product.picture">
+						<img src="{{product.product.picture}}" alt="product" width="37" height="86">
+					</div>
+					<div class="product-details">
+						<h2>{{product.product.name}}</h2>
+						<table>
+							<tr>
+								<td class="title" ng-if="product.product.category">
+									Categorie
+								</td>
+								<td>
+									{{product.product.category}}
+								</td>
+							</tr>
+							<tr ng-if="product.product.bio">
+								<td class="title">
+									Bio
+								</td>
+								<td>
+									Ja
+								</td>
+							</tr>
+							<tr ng-if="!product.product.bio">
+								<td class="title">
+									Bio
+								</td>
+								<td>
+									Nee
+								</td>
+							</tr>
+							<tr ng-if="product.product.country">
+								<td class="title">
+									Afkomst
+								</td>
+								<td>
+									{{product.product.country}}
+									<flag class="flag-box">
+										<flag class="flag {{product.product.country_code.toLowerCase()}}"></flag>
+									</flag>
+								</td>
+							</tr>
+							<tr ng-if="product.product.transport">
+								<td class="title">
+									Transport
+								</td>
+								<td>
+									{{product.product.transport}} km
+								</td>
+							</tr>
+							<tr ng-if="product.product.amount">
+								<td class="title">
+									Hoeveelheid
+								</td>
+								<td>
+									{{product.product.amount}} {{product.product.unit}}
+								</td>
+							</tr>
+							<!--<tr>
+								<td class="title">
+									Seizoensproduct
+								</td>
+								<td>
+									nee
+								</td>
+							</tr>-->
+						</table>
+					</div>
+				</div>
+				<div class="footprint {{product.colorClass}}">
+					<div class="text-center">
+						<p class="total-footprint cWhite">Voetafdruk: {{product.product.voetafdruk}} <span class="unit">m&sup2;/kg</span></p>
+					</div>
+					<div class="center-block align-middle">
+						<div class="wrapper text-center">
+							<span class="icon-ingredients"></span>
+							<p>{{product.product.voetafdruk_ingredient}} <span class="unit">m&sup2;/kg</span></p>
+						</div>
+						<div class="wrapper text-center">
+							<span class="icon-storage"></span>
+							<p>{{product.product.voetafdruk_bewaring}} <span class="unit">m&sup2;/kg</span></p>
+						</div>
+						<div class="wrapper text-center">
+							<span class="icon-package"></span>
+							<p>{{product.product.voetafdruk_verpakking}} <span class="unit">m&sup2;/kg</span></p>
+						</div>
+						<div class="wrapper text-center">
+							<span class="icon-truck"></span>
+							<p>{{product.product.voetafdruk_transport}} <span class="unit">m&sup2;/kg</span></p>
+						</div>
+						<div class="wrapper text-center">
+							<span class="icon-season"></span>
+							<p>{{product.product.voetafdruk_seizoen}} <span class="unit">m&sup2;/kg</span></p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="summary text-center">
+					<p ng-if="product.colorClass === 'bgGreen'">Dit product heeft een <span class="cGreen">lage voetafdruk</span>.</p>
+					<p ng-if="product.colorClass === 'bgYellow'">Dit product laat een <span class="cYellow">behoorlijke voetafdruk</span> na.<br>Kijk onderaan of er geen eenvoudige alternatieven beschikbaar zijn.</p>
+					<p ng-if="product.colorClass === 'bgRed'">Dit product heeft een <span class="cRed">hoge voetafdruk</span>.<br>Evalueer of je dit product echt nodig hebt of kijk onderaan of er betere alternatieven beschikbaar zijn.</p>
+				</div>
+			</div>
+			
+			<div class="tabs-component" ng-controller="TabsCtrl">
+				<div class="tabs-header center-block align-middle layout-fixed width-100">
+					<div class="tab-trigger" ng-class="{active:currentTab==0}" ng-click="setTabActive(0)">
+						Producten binnen categorie
+					</div>
+					<div class="tab-trigger" ng-class="{active:currentTab==1}" ng-click="setTabActive(1)">
+						Producten buiten categorie
+					</div>
+				</div>
+				<div class="tab" ng-show="currentTab==0">
+					<p ng-if="product.others.length == 0" class="padding-10 text-center">Er werd helaas geen alternatief gevonden binnen dezelfde categorie. </p>
+					<ul class="table-view alternative-products">
+						<li ng-repeat="product in product.others">
+							<div class="center-block align-middle layout-fixed">
+								<div class="product-img" ng-if="product.picture">
+									<img src="{{product.picture}}" alt="product" width="37" height="86">
+								</div>
+								<div class="product-info">
+									<h2 class="cGreen">{{product.name}}</h2>
+									<div class="center-block align-middle">
+										<div>
+											<p><b>Voetafdruk:</b> {{product.voetafdruk}} <span class="unit">m&sup2;/kg</span></p>
+											<p ng-if="product.voordeel !== 0"><b>de voetafdruk van dit product ligt {{product.voordeel}} lager dan het gescande product</b></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="tab" ng-show="currentTab==1">
+					<p ng-if="product.others_parent.length > 0" class="padding-10 text-center">overweegt u om een aankoop te doen buiten deze categorie dan zijn dit producten met een lagere voetafdruk</p>
+					<ul class="table-view alternative-products">
+						<li ng-repeat="product in product.others_parent">
+							<div class="center-block align-middle layout-fixed">
+								<div class="product-img" ng-if="product.picture">
+									<img src="{{product.picture}}" alt="product" width="37" height="86">
+								</div>
+								<div class="product-info">
+									<h2 class="cGreen">{{product.name}}</h2>
+									<div class="center-block align-middle">
+										<div>
+											<p><b>Voetafdruk:</b> {{product.voetafdruk}} <span class="unit">m&sup2;/kg</span></p>
+											<p ng-if="product.voordeel !== 0" class="margin-t-5">de voetafdruk van dit product is <b>{{product.voordeel}}% lager</b> dan het gescande product</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+	</ion-content>
+</ion-view>

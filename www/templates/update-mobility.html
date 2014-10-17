@@ -1,0 +1,67 @@
+<div class="modal">	
+	<ion-header-bar class="app-header bar-stable nav-title-slide-ios7 bar bar-header nav-bar disable-user-behavior">
+    	<h1 class="title">Mobiliteit updaten</h1>
+        <button class="button button-icon ion-ios7-close-empty button-primary" ng-click="updateMobilityModal.hide()"></button>
+    </ion-header-bar>
+	
+	<ion-content class="app-content wPadding" ng-controller="UpdateMobilityCtrl">
+		<form name="mobilityForm" ng-submit="processForm(formData.currentAmountOfKm)">
+			<fieldset>
+				<h2 class="title">Eigen wagen</h2>
+				<label>Huidige kilometerstand</label>
+				<div class="input-w-label" data-value="km">
+					<input type="number" name="currentAmountOfKm" ng-model="formData.currentAmountOfKm" placeholder="Laatste ingave: {{currentValue.currentAmountOfKm}}" min="{{currentValue.currentAmountOfKm}}" ng-class="{alert:formData.currentAmountOfKm < currentValue.currentAmountOfKm}">
+					<div class="alert-text cOrange">Opgelet: Deze waarde is lager dan uw vorige ingave</div>
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<h2 class="title">Autodelen</h2>
+				<label>Gemiddeld aantal uren per week gehuurde wagen</label>
+				<div class="input-w-label" data-value="uur">
+					<input type="number" name="hoursSharedCar" ng-model="formData.hoursSharedCar" placeholder="Laatste ingave: {{currentValue.currentAmountOfHoursSharedCar}}">
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<h2 class="title">Openbaar vervoer</h2>
+				<label>Gemiddeld aantal uren per week openbaar vervoer</label>
+				<div class="input-w-label" data-value="uur">
+					<input type="number" name="publicTransport" ng-model="formData.publicTransport" placeholder="Laatste ingave: {{currentValue.currentAmountOfPublicTransport}}">
+				</div>
+				
+				<label>Aantal Europese vluchten sinds vorige meting <button type="button" class="icon-info popup-trigger" ng-click="openPopup('Aantal vluchten','Een heen- en terugreis telt voor twee vluchten.')"></button></label>
+				<div class="input-w-label" data-value="vluchten">
+					<input type="number" name="europeanFlights" ng-model="formData.europeanFlights" placeholder="Laatste ingave: {{currentValue.currentAmountOfEuropeanFlights}}">
+				</div>
+				
+				<label>Aantal intercontinentale vluchten sinds vorige meting <button type="button" class="icon-info popup-trigger" ng-click="openPopup('Aantal vluchten','Een heen- en terugreis telt voor twee vluchten.')"></button></label>
+				<div class="input-w-label" data-value="vluchten">
+					<input type="number" name="intercontinentalFlights" ng-model="formData.intercontinentalFlights" placeholder="Laatste ingave: {{currentValue.currentAmountOfIntercontinentalFlights}}">
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<h2 class="title">Alternatief vervoer</h2>
+				<label>Gemiddeld aantal uren per week gefietst</label>
+				<div class="input-w-label" data-value="uur">
+					<input type="number" name="bicycle" ng-model="formData.bicycle" placeholder="Laatste ingave: {{currentValue.bicycle}}">
+				</div>
+				
+				<label>Gemiddeld aantal uren per week gewandeld</label>
+				<div class="input-w-label" data-value="uur">
+					<input type="number" name="walking" ng-model="formData.walking" placeholder="Laatste ingave: {{currentValue.walking}}">
+				</div>
+				
+			</fieldset>
+			
+			<div class="bottom-navigation">
+				<div class="center-block align-middle width-100">
+					<div class="text-center width-100">
+						<button type="submit" class="btn btn btn-solid bgGreen">klaar</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</ion-content>
+</div>
